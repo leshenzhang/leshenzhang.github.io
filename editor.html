@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>写日记</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="site-title"><a href="index.html">小白的日记</a></h1>
+      <nav class="site-nav">
+        <a href="index.html">← 返回</a>
+        <a href="editor.html">写日记</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container editor">
+    <!-- 设置：GitHub 仓库 + 访问令牌（只填一次，保存在你本机浏览器里） -->
+    <details class="config" id="config">
+      <summary>设置（首次使用先填这里）<span id="cfg-badge" class="inline-status"></span></summary>
+      <div class="field">
+        <label for="cfg-repo">GitHub 仓库（格式：用户名/仓库名）</label>
+        <input id="cfg-repo" type="text" placeholder="例如 alice/alice.github.io" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="cfg-branch">分支</label>
+        <input id="cfg-branch" type="text" value="main" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="cfg-token">访问令牌 Personal Access Token</label>
+        <input id="cfg-token" type="password" placeholder="ghp_… 或 github_pat_…" autocomplete="off">
+      </div>
+      <div class="toolbar">
+        <button class="btn btn-primary" id="save-cfg" type="button">保存设置</button>
+        <span id="cfg-status" class="inline-status"></span>
+      </div>
+      <div class="help">
+        <p><strong>怎么拿到令牌？</strong></p>
+        <ol>
+          <li>打开 <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings → Fine-grained tokens</a></li>
+          <li>Repository access 选 <code>Only select repositories</code>，选中你的博客仓库</li>
+          <li>Permissions → Repository permissions → <code>Contents</code> 设为 <code>Read and write</code></li>
+          <li>生成后复制 <code>github_pat_…</code>，粘贴到上面，点“保存设置”</li>
+        </ol>
+        <p>令牌只保存在<strong>你这台设备的浏览器</strong>里，不会上传到任何地方。请勿在公用电脑上使用。</p>
+      </div>
+    </details>
+
+    <!-- 写作区 -->
+    <div class="editor-meta">
+      <div class="field field-title">
+        <label for="f-title">标题</label>
+        <input id="f-title" type="text" placeholder="今天想记点什么？">
+      </div>
+      <div class="field field-date">
+        <label for="f-date">日期</label>
+        <input id="f-date" type="date">
+      </div>
+    </div>
+
+    <div class="editor-split">
+      <div>
+        <div class="col-label">正文（支持 Markdown）</div>
+        <textarea id="f-body" placeholder="在这里写下今天的日记……
+
+支持 Markdown：
+## 小标题
+**加粗**  *斜体*
+> 引用
+- 列表"></textarea>
+      </div>
+      <div>
+        <div class="col-label">预览</div>
+        <div id="preview" class="preview-pane post-content"></div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <button class="btn btn-primary" id="publish" type="button">发布</button>
+      <button class="btn" id="save-draft" type="button">保存草稿</button>
+      <span id="status" class="status"></span>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container"><p>© <span id="year"></span> 小白</p></div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="assets/js/editor.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的日记</title>
+  <meta name="description" content="个人日记博客">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <!-- TODO: 把下面的名字、简介、链接改成你自己的 -->
+      <h1 class="site-title"><a href="index.html">小白的日记</a></h1>
+      <p class="site-tagline">记录生活，与自己对话</p>
+      <nav class="site-nav">
+        <a href="index.html">日记</a>
+        <a href="#about">关于</a>
+        <a href="editor.html">✍️ 写日记</a>
+        <a href="https://github.com/leshenzhang" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="about" class="about">
+      <!-- TODO: 自我介绍 -->
+      <p>你好，我是 <strong>小白</strong>。这里是我的个人日记，记录日常、想法，以及一些想留住的瞬间。</p>
+    </section>
+
+    <section class="posts">
+      <h2 class="section-title">全部日记</h2>
+      <ul id="post-list" class="post-list">
+        <li class="loading">加载中…</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> 小白 · 用 ❤️ 记录</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/site.js"></script>
+</body>
+</html>
