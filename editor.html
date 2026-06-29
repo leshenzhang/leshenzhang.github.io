@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>写日记</title>
+  <title>写日记 · 小白的日记</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Noto+Serif+SC:wght@300;400;600&display=swap" rel="stylesheet">
@@ -52,6 +53,14 @@
       </div>
     </details>
 
+    <!-- 选择已有日记进行编辑 / 删除，或新建 -->
+    <div class="entry-bar">
+      <select id="entry-picker" class="entry-picker" aria-label="选择日记">
+        <option value="">✏️ 写新日记</option>
+      </select>
+      <button class="btn btn-danger" id="delete-entry" type="button" hidden>删除这篇</button>
+    </div>
+
     <!-- 写作区 -->
     <div class="editor-meta">
       <div class="field field-title">
@@ -66,14 +75,20 @@
 
     <div class="editor-split">
       <div>
-        <div class="col-label">正文（支持 Markdown）</div>
+        <div class="md-toolbar">
+          <span class="col-label">正文（支持 Markdown）</span>
+          <button class="btn btn-mini" id="insert-image" type="button">📷 插入图片</button>
+        </div>
         <textarea id="f-body" placeholder="在这里写下今天的日记……
 
 支持 Markdown：
 ## 小标题
 **加粗**  *斜体*
 > 引用
-- 列表"></textarea>
+- 列表
+
+也可以把图片拖进来自动上传"></textarea>
+        <input type="file" id="image-file" accept="image/*" hidden>
       </div>
       <div>
         <div class="col-label">预览</div>
