@@ -62,9 +62,7 @@
 
 ⚠ 注意：很多学校的邮件安全系统（如 Microsoft Safe Links、Proofpoint）会**自动预先打开邮件里的链接**做安全扫描，所以"有访问"不一定是老师本人。判断时看访问时间（收信后几秒内的访问多半是扫描器）和是否浏览了多页、下载了 CV。
 
-## 5. 你原来的日记站
+## 5. 原日记站（已处理，2026-09-30）
 
-`leshenzhang.github.io`（仓库 `leshenzhang/leshenzhang.github.io`）现在是公开的个人日记博客，老师很容易搜到。三个选项，告诉我选哪个：
-- 保留原样；
-- 仓库改为私有（日记下线）；
-- 让 `leshenzhang.github.io` 自动跳转到学术主页，日记挪到别的地址。
+原仓库 `leshenzhang.github.io` 已改名为 `leshenzhang/diary`，设为私有并关闭 Pages；`leshenzhang.github.io/` 根地址现在返回 404，学术主页 `/homepage/` 不受影响。内容都还在私有仓库里。
+恢复方法：把仓库改回原名 `leshenzhang.github.io`，再在 Settings → Pages 选 `main` 分支、根目录 `/`。
