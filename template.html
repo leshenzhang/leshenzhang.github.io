@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leshen Zhang</title>
+<meta name="description" content="Leshen Zhang — computational catalysis, machine-learned potentials, and AI-assisted scientific software. Undergraduate in Chemistry at Fudan University.">
+<meta property="og:title" content="Leshen Zhang">
+<meta property="og:description" content="Computational catalysis · machine-learned potentials · AI-assisted research infrastructure">
+<meta property="og:image" content="assets/research_overview.jpg">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%231d4ed8'/><text x='32' y='43' font-size='30' text-anchor='middle' fill='white' font-family='Arial' font-weight='700'>LZ</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#1f2937; --muted:#6b7280; --line:#e5e7eb; --accent:#1d4ed8; --bg:#ffffff; --soft:#f8fafc; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.6 Lato, "Helvetica Neue", Arial, sans-serif; }
+  a { color:var(--accent); text-decoration:none; } a:hover { text-decoration:underline; }
+  nav { position:sticky; top:0; z-index:5; background:rgba(255,255,255,.94); backdrop-filter:blur(6px); border-bottom:1px solid var(--line); }
+  nav .in { max-width:880px; margin:0 auto; padding:10px 20px; display:flex; gap:18px; flex-wrap:wrap; align-items:center; }
+  nav .brand { font-weight:700; color:var(--ink); margin-right:auto; }
+  nav a { color:var(--muted); font-size:15px; } nav a:hover { color:var(--accent); }
+  main { max-width:880px; margin:0 auto; padding:0 20px 60px; }
+  header.hero { padding:44px 0 28px; border-bottom:1px solid var(--line); }
+  .hero h1 { margin:0 0 6px; font-size:38px; letter-spacing:.2px; }
+  .hero .role { color:var(--muted); margin:0 0 14px; }
+  .hero .badge { display:inline-block; background:#eff6ff; color:var(--accent); border:1px solid #bfdbfe; border-radius:999px; padding:2px 12px; font-size:14px; margin-bottom:14px; }
+  .links { display:flex; gap:10px; flex-wrap:wrap; }
+  .links a { border:1px solid var(--line); border-radius:8px; padding:6px 14px; color:var(--ink); font-size:15px; }
+  .links a:hover { border-color:var(--accent); color:var(--accent); text-decoration:none; }
+  .links a.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+  section { padding:34px 0 6px; }
+  h2 { font-size:22px; margin:0 0 14px; padding-bottom:6px; border-bottom:2px solid var(--ink); display:inline-block; }
+  h3 { font-size:18px; margin:26px 0 8px; }
+  h4 { font-size:15px; margin:16px 0 6px; font-style:italic; color:var(--muted); font-weight:700; }
+  figure { margin:8px 0 18px; } figure img { width:100%; border:1px solid var(--line); border-radius:10px; }
+  figcaption { color:var(--muted); font-size:14px; margin-top:6px; }
+  .proj { margin:10px 0 14px; padding:10px 14px; background:var(--soft); border-left:3px solid var(--accent); border-radius:0 8px 8px 0; }
+  .proj .ptitle { font-weight:700; }
+  .proj .pi { color:var(--muted); font-size:14px; font-style:italic; }
+  .proj p { margin:4px 0 0; }
+  ol.pubs { list-style:none; padding:0; margin:0; }
+  ol.pubs li { margin:0 0 12px; padding-left:44px; text-indent:-44px; font-size:15px; }
+  ol.pubs .tag { display:inline-block; width:40px; text-indent:0; font-weight:700; color:var(--muted); }
+  strong.me { text-decoration:underline; }
+  .note { color:var(--muted); font-size:14px; margin:-6px 0 12px; }
+  ul.dated { list-style:none; padding:0; margin:0; }
+  ul.dated li { margin:0 0 8px; padding-left:156px; text-indent:-156px; font-size:15px; }
+  ul.dated .when { display:inline-block; width:152px; text-indent:0; color:var(--muted); white-space:nowrap; }
+  ul.dated .where { color:var(--muted); font-style:italic; }
+  .sw { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; }
+  .sw div { border:1px solid var(--line); border-radius:10px; padding:12px 14px; }
+  .sw b { display:block; margin-bottom:4px; }
+  footer { max-width:880px; margin:0 auto; padding:20px; color:var(--muted); font-size:14px; border-top:1px solid var(--line); }
+  @media (max-width:600px) {
+    .hero h1 { font-size:30px; }
+    ul.dated li { padding-left:0; text-indent:0; } ul.dated .when { display:block; width:auto; }
+    ol.pubs li { padding-left:0; text-indent:0; }
+  }
+</style>
+</head>
+<body>
+<nav><div class="in">
+  <a class="brand" href="#top">Leshen Zhang</a>
+  <a href="#about">About</a><a href="#research">Research</a><a href="#publications">Publications</a>
+  <a href="#software">Software</a><a href="#honors">Honors</a><a href="cv/Leshen_Zhang_CV.pdf">CV</a>
+</div></nav>
+<main id="top">
+<header class="hero">
+  <span class="badge">Applying for PhD programs · Fall 2027</span>
+  <h1>Leshen Zhang</h1>
+  <p class="role">B.S. in Chemistry, Fudan University (expected 2027) · Research Assistant with Prof. Anastassia N. Alexandrova, UC Los Angeles</p>
+  <div class="links">
+    <a class="primary" href="cv/Leshen_Zhang_CV.pdf">CV (PDF)</a>
+    <a href="mailto:zhangls23@m.fudan.edu.cn">Email</a>
+    <a href="#publications">Publications</a>
+  </div>
+</header>
+
+<section id="about">
+  <h2>About</h2>
+  <p>Catalysts and binding sites work under applied potential, solvent, adsorbates and electric fields that reshape their structure and electrostatics, yet most models treat them as static and unpolarized. My research asks <strong>how these operating conditions change reactivity and binding</strong>, and builds the simulation, machine-learning and AI tools needed to answer that at scale.</p>
+  <p>I have worked with Prof. Gengfeng Zheng (Fudan University), Prof. Wan-Lu Li (UC San Diego) and, currently, Prof. Anastassia N. Alexandrova (UC Los Angeles), on first-principles catalysis, machine-learned potentials for biomolecular electrostatics, and AI-assisted research software.</p>
+</section>
+
+<section id="research">
+  <h2>Research</h2>
+  <figure>
+    <img src="assets/research_overview.jpg" alt="Research overview: materials DFT under operating conditions and molecular simulation of biomolecules share machine-learned potentials, supported by AI-assisted research software (CatGo, ChemMate, SPARK).">
+    <figcaption>Two scientific cores sharing machine-learned potentials, built on AI-assisted research infrastructure.</figcaption>
+  </figure>
+{{RESEARCH}}
+</section>
+
+<section id="publications">
+  <h2>Publications</h2>
+  <p class="note"><sup>‡</sup>equal contribution · *corresponding author</p>
+  <ol class="pubs">
+{{PUBLICATIONS}}
+  </ol>
+  <h3>Preprints &amp; papers under review</h3>
+  <ol class="pubs">
+{{PREPRINTS}}
+  </ol>
+</section>
+
+<section id="software">
+  <h2>Software</h2>
+  <div class="sw">
+    <div><b><a href="https://github.com/Hello-QM/catgo-LRG">CatGo</a></b>Open-source structure → DFT → HPC → analysis workbench that AI coding agents can drive, with every action reviewable. <em>Digit. Discov.</em> 2026.</div>
+    <div><b><a href="https://doi.org/10.26434/chemrxiv.15006055/v1">ChemMate</a></b>Autonomous research collaborator that carries computational-chemistry projects from ideation to manuscript under human gates. ChemRxiv 2026.</div>
+    <div><b><a href="https://github.com/WanluLigroupUCSD/SPARK">SPARK</a></b>On-the-fly kinetic Monte Carlo for surface reactions.</div>
+  </div>
+</section>
+
+<section id="honors">
+  <h2>Honors &amp; Awards</h2>
+  <ul class="dated">
+{{HONORS}}
+  </ul>
+  <h3>Presentations</h3>
+  <ul class="dated">
+{{TALKS}}
+  </ul>
+</section>
+</main>
+<footer>© Leshen Zhang · Last updated {{UPDATED}} · <a href="cv/Leshen_Zhang_CV.pdf">CV (PDF)</a></footer>
+<!-- Visit tracker (GoatCounter). Works once the account leshenzhang.goatcounter.com exists.
+     Per-recipient links: https://<domain>/?ref=<name> show up as the referrer "<name>" in the dashboard. -->
+<script data-goatcounter="https://leshenzhang.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
