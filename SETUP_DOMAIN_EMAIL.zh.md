@@ -1,6 +1,6 @@
 # 个人主页：域名 + 域名邮箱 + 访问统计 配置指南（2026-09-30）
 
-现状：网站已上线 https://leshenzhang.github.io/homepage/ （仓库 `leshenzhang/homepage`，GitHub Pages）。
+现状：网站已上线 https://leshenzhang.github.io/ （仓库 `leshenzhang/leshenzhang.github.io`，GitHub Pages；本地目录 `application/homepage/`）。
 内容由 `build.py` 从 `../cv/CV-PhD/main.tex` 生成；改完 CV 后跑 `./update.sh`，约 1 分钟生效。
 
 下面三件事要你本人操作（付款 / 注册账号）。每步做完告诉我，我接着做代码侧。
@@ -62,7 +62,6 @@
 
 ⚠ 注意：很多学校的邮件安全系统（如 Microsoft Safe Links、Proofpoint）会**自动预先打开邮件里的链接**做安全扫描，所以"有访问"不一定是老师本人。判断时看访问时间（收信后几秒内的访问多半是扫描器）和是否浏览了多页、下载了 CV。
 
-## 5. 原日记站（已处理，2026-09-30）
+## 5. 原日记站（已下线，2026-09-30）
 
-原仓库 `leshenzhang.github.io` 已改名为 `leshenzhang/diary`，设为私有并关闭 Pages；`leshenzhang.github.io/` 根地址现在返回 404，学术主页 `/homepage/` 不受影响。内容都还在私有仓库里。
-恢复方法：把仓库改回原名 `leshenzhang.github.io`，再在 Settings → Pages 选 `main` 分支、根目录 `/`。
+用户不再需要日记站：原仓库改名为 `leshenzhang/diary`（私有、Pages 已关，内容仍在）；学术主页仓库由 `leshenzhang/homepage` 改名为 `leshenzhang/leshenzhang.github.io`，直接占用根地址 https://leshenzhang.github.io/ 。旧地址 `/homepage/` 已失效。
