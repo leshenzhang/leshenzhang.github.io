@@ -63,7 +63,7 @@ def publications(name):
     out = []
     for m in re.finditer(r"\\item\[\\textbf\{\[([JS]\.\d)\]\}\] (.*)", section(name)):
         body = latex_to_html(m.group(2)).replace("\n", "<br>")
-        out.append(f'<li><span class="tag">[{m.group(1)}]</span> {body}</li>')
+        out.append(f'<li id="{m.group(1)}"><span class="tag">[{m.group(1)}]</span> {body}</li>')
     return "\n".join(out)
 
 
@@ -82,9 +82,11 @@ def research():
         elif item:
             title = latex_to_html(item.group(1))
             rest = latex_to_html(item.group(2)).split("\n")
-            pi = rest[0].strip() if rest and rest[0].strip().startswith("PI:") else ""
-            text = "<br>".join(x.strip() for x in (rest[1:] if pi else rest) if x.strip())
-            parts.append(f'<div class="proj"><div class="ptitle">{title}</div>'
+            head = re.match(r"(?:\[([JS]\.\d)\])?\s*((?:<em>)?PI:.*)", rest[0].strip())
+            tag, pi = (head.group(1), head.group(2)) if head else (None, "")
+            text = "<br>".join(x.strip() for x in (rest[1:] if head else rest) if x.strip())
+            ref = f' <a class="ref" href="#{tag}">[{tag}]</a>' if tag else ""
+            parts.append(f'<div class="proj"><div class="ptitle">{title}{ref}</div>'
                          + (f'<div class="pi">{pi}</div>' if pi else "") + f"<p>{text}</p></div>")
     return "\n".join(parts)
 
