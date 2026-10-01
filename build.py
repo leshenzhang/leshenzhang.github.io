@@ -41,7 +41,8 @@ def latex_to_html(s):
         j = brace(s, i + 5)
         k = brace(s, j + 1)
         url, txt = s[i + 6:j], s[j + 2:k]
-        s = s[:i] + f'<a href="{url}">{txt}</a>' + s[k + 1:]
+        ev = f' data-goatcounter-click="pdf:{url.split("//", 1)[-1]}"' if "pdf" in url.lower() else ""
+        s = s[:i] + f'<a href="{url}"{ev}>{txt}</a>' + s[k + 1:]
     for cmd, tag in (("textsubscript", "sub"), ("textsuperscript", "sup"), ("textbf", "strong"),
                      ("textit", "em"), ("underline", "u"), ("small", "")):
         while "\\" + cmd + "{" in s:
