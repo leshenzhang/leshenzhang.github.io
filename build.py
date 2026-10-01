@@ -6,7 +6,7 @@ Usage:  python3 build.py            # regenerate index.html + copy the compiled 
 Hand-written text (bio, research overview, news) lives in template.html; everything
 list-like (publications, research projects, honors, talks) is parsed from the CV.
 """
-import datetime, html, pathlib, re, shutil
+import datetime, hashlib, html, pathlib, re, shutil
 
 HERE = pathlib.Path(__file__).resolve().parent
 CV_DIR = HERE.parent / "cv" / "CV-PhD"
@@ -113,7 +113,9 @@ def main():
                .replace("{{RESEARCH}}", research())
                .replace("{{HONORS}}", dated_items("Honors and Awards"))
                .replace("{{TALKS}}", dated_items("Scientific Presentations"))
-               .replace("{{UPDATED}}", datetime.date.today().strftime("%B %Y")))
+               .replace("{{UPDATED}}", datetime.date.today().strftime("%B %Y"))
+               # content hash in the CV link: a new CV gets a new URL, so no browser/CDN serves a stale copy
+               .replace("{{CVVER}}", hashlib.md5((HERE / "cv" / "Leshen_Zhang_CV.pdf").read_bytes()).hexdigest()[:8]))
     (HERE / "index.html").write_text(page, encoding="utf-8")
     print("index.html written:", len(page), "chars")
 
