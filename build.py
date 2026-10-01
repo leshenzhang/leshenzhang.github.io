@@ -144,6 +144,8 @@ def main():
     if pdf.exists():
         shutil.copy(pdf, HERE / "cv" / "Leshen_Zhang_CV.pdf")
         shutil.copy(CV_DIR / "main.tex", SNAPSHOT)
+    if (CV_DIR / "research_summary.pdf").exists():
+        shutil.copy(CV_DIR / "research_summary.pdf", HERE / "cv" / "Leshen_Zhang_Research_Summary.pdf")
     page = (tpl.replace("{{PUBLICATIONS}}", publications("Publications"))
                .replace("{{PREPRINTS}}", publications("Preprints"))
                .replace("{{RESEARCH}}", research())
@@ -151,7 +153,8 @@ def main():
                .replace("{{TALKS}}", dated_items("Scientific Presentations"))
                .replace("{{UPDATED}}", datetime.date.today().strftime("%B %Y"))
                # content hash in the CV link: a new CV gets a new URL, so no browser/CDN serves a stale copy
-               .replace("{{CVVER}}", hashlib.md5((HERE / "cv" / "Leshen_Zhang_CV.pdf").read_bytes()).hexdigest()[:8]))
+               .replace("{{CVVER}}", hashlib.md5((HERE / "cv" / "Leshen_Zhang_CV.pdf").read_bytes()).hexdigest()[:8])
+               .replace("{{RSVER}}", hashlib.md5((HERE / "cv" / "Leshen_Zhang_Research_Summary.pdf").read_bytes()).hexdigest()[:8]))
     (HERE / "index.html").write_text(page, encoding="utf-8")
     print("index.html written:", len(page), "chars")
 
