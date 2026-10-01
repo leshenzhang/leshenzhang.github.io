@@ -62,6 +62,13 @@ def section(name):
     return m.group(1) if m else ""
 
 
+def tile_text(venue, journal):
+    """Placeholder for papers without a figure: publication status (from the CV line) + journal."""
+    v = venue.lower()
+    status = "Under review" if "under review" in v else "To be submitted" if "to be submitted" in v else ""
+    return "<br>".join(x for x in (f"<b>{status}</b>" if status else "", journal) if x)
+
+
 def publications(name):
     """One row per paper, as on kovenyu.com: thumbnail | title / authors / venue + links / author role."""
     out = []
@@ -80,7 +87,7 @@ def publications(name):
         venue = venue.replace(jname, f"<b>{jname}</b>", 1) if journal else venue
         thumb = HERE / "assets" / "thumbs" / (tag.replace(".", "") + ".jpg")
         pic = (f'<div class="thumb"><img src="assets/thumbs/{thumb.name}" alt="" loading="lazy"></div>' if thumb.exists()
-               else f'<div class="thumb tile">{jname}</div>')
+               else f'<div class="thumb tile">{tile_text(venue, jname if journal else "")}</div>')
         ttl = f'<a href="{doi_url}">{title}</a>' if doi_url else title
         lk = "".join(f' / <a href="{u}"' + (f' data-goatcounter-click="pdf:{u.split("//", 1)[-1]}"' if k == "PDF" else "")
                      + f">{k}</a>" for u, k in links)
