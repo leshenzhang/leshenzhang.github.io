@@ -63,10 +63,30 @@ def section(name):
 
 
 def publications(name):
+    """One row per paper, as on kovenyu.com: thumbnail | title / authors / venue + links / author role."""
     out = []
     for m in re.finditer(r"\\item\[\\textbf\{\[([JS]\.\d)\]\}\] (.*)", section(name)):
-        body = latex_to_html(m.group(2)).replace("\n", "<br>")
-        out.append(f'<li id="{m.group(1)}"><span class="tag">[{m.group(1)}]</span> {body}</li>')
+        tag, body = m.group(1), re.sub(r"\\hypertarget\{[^}]*\}\{\}", "", m.group(2))
+        top, _, bottom = body.partition("\\\\")
+        t = re.search(r"(?:\\href\{([^}]*)\}\{)?\\textbf\{((?:[^{}]|\{[^{}]*\})*)\}\}?\.\s*$", top.strip())
+        doi_url, title = t.group(1), latex_to_html(t.group(2))
+        authors = latex_to_html(top.strip()[:t.start()].strip().rstrip("."))
+        links = re.findall(r"\\href\{([^}]*)\}\{\[(PDF|DOI)\]\}", bottom)
+        role = re.search(r"\(([^()]*)\)\s*$", bottom.strip())
+        journal = re.search(r"\\textit\{([^}]*)\}", bottom)
+        venue = re.sub(r"\\href\{[^}]*\}\{\[(PDF|DOI)\]\}", "", bottom)
+        venue = latex_to_html(venue[:venue.rindex("(")] if role else venue).strip().rstrip(".")
+        jname = latex_to_html(journal.group(1)) if journal else "In preparation"
+        venue = venue.replace(jname, f"<b>{jname}</b>", 1) if journal else venue
+        thumb = HERE / "assets" / "thumbs" / (tag.replace(".", "") + ".jpg")
+        pic = (f'<div class="thumb"><img src="assets/thumbs/{thumb.name}" alt="" loading="lazy"></div>' if thumb.exists()
+               else f'<div class="thumb tile">{jname}</div>')
+        ttl = f'<a href="{doi_url}">{title}</a>' if doi_url else title
+        lk = "".join(f' / <a href="{u}"' + (f' data-goatcounter-click="pdf:{u.split("//", 1)[-1]}"' if k == "PDF" else "")
+                     + f">{k}</a>" for u, k in links)
+        out.append(f'<div class="pub" id="{tag}">{pic}<div><div class="pt">{ttl}</div><div class="pa">{authors}</div>'
+                   f'<div class="pv"><span class="tag">[{tag}]</span>{venue}{lk}</div>'
+                   + (f'<div class="pr">{role.group(1)}</div>' if role else "") + "</div></div>")
     return "\n".join(out)
 
 
@@ -79,9 +99,10 @@ def research():
         sub = re.search(r"itshape (\([ab]\) [^}]*)\}\\par", line)
         item = re.match(r"(?:\\Needspace\{\d+\\baselineskip\})?\\item \\textbf\{(.*?)\} \\\\\*? (.*)", line)
         if cat:
-            parts.append(f"<h3>{latex_to_html(cat.group(1))}</h3>")
+            anchor = {"II": ' id="rc"', "III": ' id="rd"'}.get(cat.group(1).split(".")[0], "")
+            parts.append(f"<h3{anchor}>{latex_to_html(cat.group(1))}</h3>")
         elif sub:
-            parts.append(f'<h4>{latex_to_html(sub.group(1))}</h4>')
+            parts.append(f'<h4 id="r{sub.group(1)[1]}">{latex_to_html(sub.group(1))}</h4>')
         elif item:
             title = latex_to_html(item.group(1))
             rest = latex_to_html(item.group(2)).split("\n")
@@ -103,6 +124,12 @@ def dated_items(name):
     return "\n".join(out)
 
 
+def awards():
+    """Honors from the CV as 'name, date' bullets (two columns in the page)."""
+    return "\n".join(f"<li>{m.group(2)}, <span class=\"nb\">{m.group(1)}</span></li>" for m in
+                     re.finditer(r'<span class="when">(.*?)</span>(.*?)</li>', dated_items("Honors and Awards")))
+
+
 def main():
     tpl = (HERE / "template.html").read_text(encoding="utf-8")
     pdf = CV_DIR / "main.pdf"
@@ -111,7 +138,7 @@ def main():
     page = (tpl.replace("{{PUBLICATIONS}}", publications("Publications"))
                .replace("{{PREPRINTS}}", publications("Preprints"))
                .replace("{{RESEARCH}}", research())
-               .replace("{{HONORS}}", dated_items("Honors and Awards"))
+               .replace("{{AWARDS}}", awards())
                .replace("{{TALKS}}", dated_items("Scientific Presentations"))
                .replace("{{UPDATED}}", datetime.date.today().strftime("%B %Y"))
                # content hash in the CV link: a new CV gets a new URL, so no browser/CDN serves a stale copy
