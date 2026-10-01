@@ -26,6 +26,8 @@ def brace(s, i):
 
 def latex_to_html(s):
     s = s.replace("\\me", "\x00ME\x00").replace("\\eq", "\x00EQ\x00")
+    s = re.sub(r"\\hypertarget\{[^}]*\}\{\}", "", s)            # PDF-only anchors
+    s = re.sub(r"\\hyperlink\{[^}]*\}", "", s)                   # keep the link text
     s = re.sub(r"\\hspace\*\{\\fill\}", "", s)
     s = s.replace("\\\\*", "\n").replace("\\\\", "\n")
     s = s.replace("~", " ").replace("---", "—").replace("--", "–").replace("\\&", "&")
@@ -82,7 +84,7 @@ def research():
         elif item:
             title = latex_to_html(item.group(1))
             rest = latex_to_html(item.group(2)).split("\n")
-            head = re.match(r"(?:\[([JS]\.\d)\])?\s*((?:<em>)?PI:.*)", rest[0].strip())
+            head = re.match(r"(?:(?:<strong>)?\[([JS]\.\d)\](?:</strong>)?)?\s*((?:<em>)?PI:.*)", rest[0].strip())
             tag, pi = (head.group(1), head.group(2)) if head else (None, "")
             text = "<br>".join(x.strip() for x in (rest[1:] if head else rest) if x.strip())
             ref = f' <a class="ref" href="#{tag}">[{tag}]</a>' if tag else ""

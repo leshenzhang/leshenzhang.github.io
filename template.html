@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Leshen Zhang</title>
-<meta name="description" content="Leshen Zhang — computational catalysis, machine-learned potentials, and AI-assisted scientific software. Undergraduate in Chemistry at Fudan University.">
+<meta name="description" content="Leshen Zhang — computational catalysis, machine-learning potentials, and AI-assisted scientific software. Undergraduate in Chemistry at Fudan University.">
 <meta property="og:title" content="Leshen Zhang">
-<meta property="og:description" content="Computational catalysis · machine-learned potentials · AI-assisted research infrastructure">
+<meta property="og:description" content="Computational catalysis · machine-learning potentials · AI-assisted research infrastructure">
 <meta property="og:image" content="assets/research_overview.jpg">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%231d4ed8'/><text x='32' y='43' font-size='30' text-anchor='middle' fill='white' font-family='Arial' font-weight='700'>LZ</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,6 +24,9 @@
   nav a { color:var(--muted); font-size:15px; } nav a:hover { color:var(--accent); }
   main { max-width:880px; margin:0 auto; padding:0 20px 60px; }
   header.hero { padding:44px 0 28px; border-bottom:1px solid var(--line); }
+  header.hero { display:flex; flex-direction:row-reverse; align-items:center; gap:32px; }
+  .hero .intro { flex:1; min-width:0; }
+  .hero img.photo { width:160px; height:160px; border-radius:50%; object-fit:cover; border:1px solid var(--line); flex:none; }
   .hero h1 { margin:0 0 6px; font-size:38px; letter-spacing:.2px; }
   .hero .role { color:var(--muted); margin:0 0 14px; }
   .hero .badge { display:inline-block; background:#eff6ff; color:var(--accent); border:1px solid #bfdbfe; border-radius:999px; padding:2px 12px; font-size:14px; margin-bottom:14px; }
@@ -57,6 +60,8 @@
   .sw b { display:block; margin-bottom:4px; }
   footer { max-width:880px; margin:0 auto; padding:20px; color:var(--muted); font-size:14px; border-top:1px solid var(--line); }
   @media (max-width:600px) {
+    header.hero { flex-direction:column; align-items:flex-start; gap:16px; }
+    .hero img.photo { width:110px; height:110px; }
     .hero h1 { font-size:30px; }
     ul.dated li { padding-left:0; text-indent:0; } ul.dated .when { display:block; width:auto; }
     ol.pubs li { padding-left:0; text-indent:0; }
@@ -71,6 +76,8 @@
 </div></nav>
 <main id="top">
 <header class="hero">
+  <img class="photo" src="assets/photo.jpg" alt="Photo of Leshen Zhang" width="160" height="160">
+  <div class="intro">
   <span class="badge">Applying for PhD programs · Fall 2027</span>
   <h1>Leshen Zhang</h1>
   <p class="role">B.S. in Chemistry, Fudan University (expected 2027) · Research Assistant with Prof. Anastassia N. Alexandrova, UC Los Angeles</p>
@@ -80,19 +87,20 @@
     <a href="https://scholar.google.com/citations?user=KiEU9eoAAAAJ">Google Scholar</a>
     <a href="https://orcid.org/0009-0008-9143-6737">ORCID</a>
   </div>
+  </div>
 </header>
 
 <section id="about">
   <h2>About</h2>
   <p>Catalysts and binding sites work under applied potential, solvent, adsorbates and electric fields that reshape their structure and electrostatics, yet most models treat them as static and unpolarized. My research asks <strong>how these operating conditions change reactivity and binding</strong>, and builds the simulation, machine-learning and AI tools needed to answer that at scale.</p>
-  <p>I have worked with Prof. Gengfeng Zheng (Fudan University), Prof. Wan-Lu Li (UC San Diego) and, currently, Prof. Anastassia N. Alexandrova (UC Los Angeles), on first-principles catalysis, machine-learned potentials for biomolecular electrostatics, and AI-assisted research software.</p>
+  <p>I have worked with Prof. Gengfeng Zheng (Fudan University), Prof. Wan-Lu Li (UC San Diego) and, currently, Prof. Anastassia N. Alexandrova (UC Los Angeles), on first-principles catalysis, machine-learning potentials for biomolecular electrostatics, and AI-assisted research software.</p>
 </section>
 
 <section id="research">
   <h2>Research</h2>
   <figure>
-    <img src="assets/research_overview.jpg" alt="Research overview: materials DFT under operating conditions and molecular simulation of biomolecules share machine-learned potentials, supported by AI-assisted research software (CatGo, ChemMate, SPARK).">
-    <figcaption>Two scientific cores sharing machine-learned potentials, built on AI-assisted research infrastructure.</figcaption>
+    <img src="assets/research_overview.jpg" alt="Research overview: materials DFT under operating conditions and molecular simulation of biomolecules share machine-learning potentials, supported by AI-assisted research software (CatGo, ChemMate, SPARK).">
+    <figcaption>Two scientific cores sharing machine-learning potentials, built on AI-assisted research infrastructure.</figcaption>
   </figure>
 {{RESEARCH}}
 </section>

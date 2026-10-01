@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Leshen Zhang</title>
-<meta name="description" content="Leshen Zhang — computational catalysis, machine-learned potentials, and AI-assisted scientific software. Undergraduate in Chemistry at Fudan University.">
+<meta name="description" content="Leshen Zhang — computational catalysis, machine-learning potentials, and AI-assisted scientific software. Undergraduate in Chemistry at Fudan University.">
 <meta property="og:title" content="Leshen Zhang">
-<meta property="og:description" content="Computational catalysis · machine-learned potentials · AI-assisted research infrastructure">
+<meta property="og:description" content="Computational catalysis · machine-learning potentials · AI-assisted research infrastructure">
 <meta property="og:image" content="assets/research_overview.jpg">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%231d4ed8'/><text x='32' y='43' font-size='30' text-anchor='middle' fill='white' font-family='Arial' font-weight='700'>LZ</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,6 +24,9 @@
   nav a { color:var(--muted); font-size:15px; } nav a:hover { color:var(--accent); }
   main { max-width:880px; margin:0 auto; padding:0 20px 60px; }
   header.hero { padding:44px 0 28px; border-bottom:1px solid var(--line); }
+  header.hero { display:flex; flex-direction:row-reverse; align-items:center; gap:32px; }
+  .hero .intro { flex:1; min-width:0; }
+  .hero img.photo { width:160px; height:160px; border-radius:50%; object-fit:cover; border:1px solid var(--line); flex:none; }
   .hero h1 { margin:0 0 6px; font-size:38px; letter-spacing:.2px; }
   .hero .role { color:var(--muted); margin:0 0 14px; }
   .hero .badge { display:inline-block; background:#eff6ff; color:var(--accent); border:1px solid #bfdbfe; border-radius:999px; padding:2px 12px; font-size:14px; margin-bottom:14px; }
@@ -57,6 +60,8 @@
   .sw b { display:block; margin-bottom:4px; }
   footer { max-width:880px; margin:0 auto; padding:20px; color:var(--muted); font-size:14px; border-top:1px solid var(--line); }
   @media (max-width:600px) {
+    header.hero { flex-direction:column; align-items:flex-start; gap:16px; }
+    .hero img.photo { width:110px; height:110px; }
     .hero h1 { font-size:30px; }
     ul.dated li { padding-left:0; text-indent:0; } ul.dated .when { display:block; width:auto; }
     ol.pubs li { padding-left:0; text-indent:0; }
@@ -71,6 +76,8 @@
 </div></nav>
 <main id="top">
 <header class="hero">
+  <img class="photo" src="assets/photo.jpg" alt="Photo of Leshen Zhang" width="160" height="160">
+  <div class="intro">
   <span class="badge">Applying for PhD programs · Fall 2027</span>
   <h1>Leshen Zhang</h1>
   <p class="role">B.S. in Chemistry, Fudan University (expected 2027) · Research Assistant with Prof. Anastassia N. Alexandrova, UC Los Angeles</p>
@@ -80,19 +87,20 @@
     <a href="https://scholar.google.com/citations?user=KiEU9eoAAAAJ">Google Scholar</a>
     <a href="https://orcid.org/0009-0008-9143-6737">ORCID</a>
   </div>
+  </div>
 </header>
 
 <section id="about">
   <h2>About</h2>
   <p>Catalysts and binding sites work under applied potential, solvent, adsorbates and electric fields that reshape their structure and electrostatics, yet most models treat them as static and unpolarized. My research asks <strong>how these operating conditions change reactivity and binding</strong>, and builds the simulation, machine-learning and AI tools needed to answer that at scale.</p>
-  <p>I have worked with Prof. Gengfeng Zheng (Fudan University), Prof. Wan-Lu Li (UC San Diego) and, currently, Prof. Anastassia N. Alexandrova (UC Los Angeles), on first-principles catalysis, machine-learned potentials for biomolecular electrostatics, and AI-assisted research software.</p>
+  <p>I have worked with Prof. Gengfeng Zheng (Fudan University), Prof. Wan-Lu Li (UC San Diego) and, currently, Prof. Anastassia N. Alexandrova (UC Los Angeles), on first-principles catalysis, machine-learning potentials for biomolecular electrostatics, and AI-assisted research software.</p>
 </section>
 
 <section id="research">
   <h2>Research</h2>
   <figure>
-    <img src="assets/research_overview.jpg" alt="Research overview: materials DFT under operating conditions and molecular simulation of biomolecules share machine-learned potentials, supported by AI-assisted research software (CatGo, ChemMate, SPARK).">
-    <figcaption>Two scientific cores sharing machine-learned potentials, built on AI-assisted research infrastructure.</figcaption>
+    <img src="assets/research_overview.jpg" alt="Research overview: materials DFT under operating conditions and molecular simulation of biomolecules share machine-learning potentials, supported by AI-assisted research software (CatGo, ChemMate, SPARK).">
+    <figcaption>Two scientific cores sharing machine-learning potentials, built on AI-assisted research infrastructure.</figcaption>
   </figure>
 <h3>I. First-Principles Calculations for Materials and Catalysis</h3>
 <h4>(a) Surface Reconstruction and Interfacial Structure</h4>
@@ -116,19 +124,19 @@
   <h2>Publications</h2>
   <p class="note"><sup>‡</sup>equal contribution · *corresponding author</p>
   <ol class="pubs">
-<li id="J.1"><span class="tag">[J.1]</span> <strong class="me">Leshen Zhang</strong>, Guangsheng Liu, Xiao Ma, Abdulrahman Allangawi, Wan-Lu Li*. <a href="https://doi.org/10.1039/D6SC02460B"><strong>Defect-Mediated Regulation of Interfacial Hydrophobic Transport via Cavitation Thermodynamics</strong></a>. <br> <em>Chem. Sci.</em> <strong>2026</strong>, 17, 15735–15744. <a href="https://doi.org/10.1039/D6SC02460B">[DOI]</a> (Sole First Author)</li>
-<li id="J.2"><span class="tag">[J.2]</span> Guangsheng Liu<sup>‡</sup>, Xiao Ma<sup>‡</sup>, <strong class="me">Leshen Zhang</strong><sup>‡</sup>, Jenedith Pascasio, Jonathan Yang, Yuxiang Chen, Wan-Lu Li*. <a href="https://doi.org/10.1039/D6DD00273K"><strong>CatGo: Bridging CLI Coding Agents with Interactive Structure and Workflow Management for Computational Chemistry</strong></a>. <br> <em>Digit. Discov.</em> <strong>2026</strong>, 5, 3825–3849. <a href="https://doi.org/10.1039/D6DD00273K">[DOI]</a> (Co-First Author, Rank Third)</li>
-<li id="J.3"><span class="tag">[J.3]</span> Shuya Hao<sup>‡</sup>, Maoyin Wang<sup>‡</sup>, <strong class="me">Leshen Zhang</strong>, Ximeng Lv, Chen Peng, Yuhang Huang, Pei Yuan*, Qing Han*, Gengfeng Zheng*. <a href="https://doi.org/10.1002/anie.202510241"><strong>Switching Photocatalytic Methane Oxidation Toward Ethanol by Tuning Spin States</strong></a>. <br> <em>Angew. Chem. Int. Ed.</em> <strong>2025</strong>, 64, e202510241. <a href="https://doi.org/10.1002/anie.202510241">[DOI]</a> (Third Author)</li>
+<li id="J.1"><span class="tag">[J.1]</span> <strong class="me">Leshen Zhang</strong>, Guangsheng Liu, Xiao Ma, Abdulrahman Allangawi, Wan-Lu Li*. <a href="https://doi.org/10.1039/D6SC02460B"><strong>Defect-Mediated Regulation of Interfacial Hydrophobic Transport via Cavitation Thermodynamics</strong></a>. <br> <em>Chem. Sci.</em> <strong>2026</strong>, 17, 15735–15744. <a href="https://leshenzhang.github.io/papers/J1_Zhang2026_ChemSci.pdf">[PDF]</a> <a href="https://doi.org/10.1039/D6SC02460B">[DOI]</a> (Sole First Author)</li>
+<li id="J.2"><span class="tag">[J.2]</span> Guangsheng Liu<sup>‡</sup>, Xiao Ma<sup>‡</sup>, <strong class="me">Leshen Zhang</strong><sup>‡</sup>, Jenedith Pascasio, Jonathan Yang, Yuxiang Chen, Wan-Lu Li*. <a href="https://doi.org/10.1039/D6DD00273K"><strong>CatGo: Bridging CLI Coding Agents with Interactive Structure and Workflow Management for Computational Chemistry</strong></a>. <br> <em>Digit. Discov.</em> <strong>2026</strong>, 5, 3825–3849. <a href="https://leshenzhang.github.io/papers/J2_Liu2026_DigitDiscov.pdf">[PDF]</a> <a href="https://doi.org/10.1039/D6DD00273K">[DOI]</a> (Co-First Author, Rank Third)</li>
+<li id="J.3"><span class="tag">[J.3]</span> Shuya Hao<sup>‡</sup>, Maoyin Wang<sup>‡</sup>, <strong class="me">Leshen Zhang</strong>, Ximeng Lv, Chen Peng, Yuhang Huang, Pei Yuan*, Qing Han*, Gengfeng Zheng*. <a href="https://doi.org/10.1002/anie.202510241"><strong>Switching Photocatalytic Methane Oxidation Toward Ethanol by Tuning Spin States</strong></a>. <br> <em>Angew. Chem. Int. Ed.</em> <strong>2025</strong>, 64, e202510241. <a href="https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/anie.202510241">[PDF]</a> <a href="https://doi.org/10.1002/anie.202510241">[DOI]</a> (Third Author)</li>
   </ol>
   <h3>Preprints &amp; papers under review</h3>
   <ol class="pubs">
 <li id="S.1"><span class="tag">[S.1]</span> <strong class="me">Leshen Zhang</strong><sup>‡</sup>, Xujian Wang<sup>‡</sup>, Taoyu Niu, Xuchao Zhou, Xiao Ma, Guangsheng Liu, Olexandr Isayev*, Junmei Wang*, Wan-Lu Li*. <strong>Conformation-Responsive ML/MM Charges in PBSA for Protein–Ligand Affinity Ranking</strong>. <br> To be submitted. (Co-First Author, Rank First)</li>
 <li id="S.2"><span class="tag">[S.2]</span> Guangsheng Liu<sup>‡</sup>, <strong class="me">Leshen Zhang</strong><sup>‡</sup>, Xiao Ma, Abdulrahman Allangawi, Huabin Zhang*, Wan-Lu Li*. <strong>Local-Environment Populations Govern Size-Dependent OER Activity in Supported Subnanometer IrO<sub>x</sub> Clusters</strong>. <br> <em>Adv. Funct. Mater.</em>, under review. (Co-First Author, Rank Second)</li>
-<li id="S.3"><span class="tag">[S.3]</span> Xiao Ma, <strong class="me">Leshen Zhang</strong>, Guangsheng Liu, Abdulrahman Allangawi, Huabin Zhang*, Wan-Lu Li*. <a href="https://doi.org/10.26434/chemrxiv.15008697/v1"><strong>Surface Geometry Governs Cation Effects via Nonlocal Solvent Gating</strong></a>. <br> <em>Angew. Chem. Int. Ed.</em>, under review. <a href="https://doi.org/10.26434/chemrxiv.15008697/v1">[DOI]</a> (Second Author)</li>
-<li id="S.4"><span class="tag">[S.4]</span> Guangsheng Liu<sup>‡</sup>, Xiao Ma<sup>‡</sup>, <strong class="me">Leshen Zhang</strong><sup>‡</sup>, Xujian Wang, Abdulrahman Allangawi, Shaowei Li, Wan-Lu Li*. <a href="https://doi.org/10.26434/chemrxiv.15003924/v1"><strong>Intercalation-Modulated Electronic Regulation of Nitrogen Reduction on Doped MoS<sub>2</sub></strong></a>. <br> <em>J. Am. Chem. Soc.</em>, under review. <a href="https://doi.org/10.26434/chemrxiv.15003924/v1">[DOI]</a> (Co-First Author, Rank Third)</li>
-<li id="S.5"><span class="tag">[S.5]</span> Guangsheng Liu<sup>‡</sup>, <strong class="me">Leshen Zhang</strong><sup>‡</sup>, Xiao Ma, I-Shan Tsai, Jinyi Zhang, Wan-Lu Li*. <a href="https://doi.org/10.26434/chemrxiv.15006055/v1"><strong>ChemMate: An Autonomous Research Mate for the Full Computational Chemistry Research Lifecycle, from Ideation to Manuscript</strong></a>. <br> To be submitted. <a href="https://doi.org/10.26434/chemrxiv.15006055/v1">[DOI]</a> (Co-First Author, Rank Second)</li>
+<li id="S.3"><span class="tag">[S.3]</span> Xiao Ma, <strong class="me">Leshen Zhang</strong>, Guangsheng Liu, Abdulrahman Allangawi, Huabin Zhang*, Wan-Lu Li*. <a href="https://doi.org/10.26434/chemrxiv.15008697/v1"><strong>Surface Geometry Governs Cation Effects via Nonlocal Solvent Gating</strong></a>. <br> <em>Angew. Chem. Int. Ed.</em>, under review. <a href="https://chemrxiv.org/doi/pdf/10.26434/chemrxiv.15008697/v1">[PDF]</a> <a href="https://doi.org/10.26434/chemrxiv.15008697/v1">[DOI]</a> (Second Author)</li>
+<li id="S.4"><span class="tag">[S.4]</span> Guangsheng Liu<sup>‡</sup>, Xiao Ma<sup>‡</sup>, <strong class="me">Leshen Zhang</strong><sup>‡</sup>, Xujian Wang, Abdulrahman Allangawi, Shaowei Li, Wan-Lu Li*. <a href="https://doi.org/10.26434/chemrxiv.15003924/v1"><strong>Intercalation-Modulated Electronic Regulation of Nitrogen Reduction on Doped MoS<sub>2</sub></strong></a>. <br> <em>J. Am. Chem. Soc.</em>, under review. <a href="https://leshenzhang.github.io/papers/S4_Liu2026_ChemRxiv.pdf">[PDF]</a> <a href="https://doi.org/10.26434/chemrxiv.15003924/v1">[DOI]</a> (Co-First Author, Rank Third)</li>
+<li id="S.5"><span class="tag">[S.5]</span> Guangsheng Liu<sup>‡</sup>, <strong class="me">Leshen Zhang</strong><sup>‡</sup>, Xiao Ma, I-Shan Tsai, Jinyi Zhang, Wan-Lu Li*. <a href="https://doi.org/10.26434/chemrxiv.15006055/v1"><strong>ChemMate: An Autonomous Research Mate for the Full Computational Chemistry Research Lifecycle, from Ideation to Manuscript</strong></a>. <br> To be submitted. <a href="https://leshenzhang.github.io/papers/S5_Liu2026_ChemRxiv.pdf">[PDF]</a> <a href="https://doi.org/10.26434/chemrxiv.15006055/v1">[DOI]</a> (Co-First Author, Rank Second)</li>
 <li id="S.6"><span class="tag">[S.6]</span> Tingsong Li<sup>‡</sup>, Jifeng Wu<sup>‡</sup>, Abdulrahman Allangawi<sup>‡</sup>, <strong class="me">Leshen Zhang</strong>, Wan-Lu Li*, Xiangyun Xiao, Miao Hu, Mohd Adnan Khan, Rashed Aleisa, Shouwei Zuo, Heng Guo, Kuo-Wei Huang*, Ying Zhou*, Huabin Zhang*, Magnus Rueping*. <strong>Interfacial Proton Relay Enables CO<sub>2</sub>-to-Methanol Electroreduction on Layered Cobalt Phthalocyanine</strong>. <br> <em>J. Am. Chem. Soc.</em>, under review. (Fourth Author)</li>
-<li id="S.7"><span class="tag">[S.7]</span> Xuchao Zhou, Xujian Wang, Jiahao Xie, <strong class="me">Leshen Zhang</strong>, Junmei Wang*. <a href="https://doi.org/10.26434/chemrxiv.15008812/v1"><strong>Leveraging Machine Learning Interatomic Potentials into Fitting Fast and Accurate AMBER-Compatible Precise Force Field</strong></a>. <br> <em>Chem. Sci.</em>, under review. <a href="https://doi.org/10.26434/chemrxiv.15008812/v1">[DOI]</a> (Fourth Author)</li>
+<li id="S.7"><span class="tag">[S.7]</span> Xuchao Zhou, Xujian Wang, Jiahao Xie, <strong class="me">Leshen Zhang</strong>, Junmei Wang*. <a href="https://doi.org/10.26434/chemrxiv.15008812/v1"><strong>Leveraging Machine Learning Interatomic Potentials into Fitting Fast and Accurate AMBER-Compatible Precise Force Field</strong></a>. <br> <em>Chem. Sci.</em>, under review. <a href="https://chemrxiv.org/doi/pdf/10.26434/chemrxiv.15008812/v1">[PDF]</a> <a href="https://doi.org/10.26434/chemrxiv.15008812/v1">[DOI]</a> (Fourth Author)</li>
 <li id="S.8"><span class="tag">[S.8]</span> Yunzhi Wang<sup>‡</sup>, Chengyang Feng<sup>‡</sup>, Lijie Wang<sup>‡</sup>, Yang Cheng, <strong class="me">Leshen Zhang</strong>, Yinglu Jia, Lingyun Zhao, Abdulrahman Allangawi, Weiwei Li*, Wan-Lu Li*, Martin Heeney, Magnus Rueping, Omar F. Mohammed*, Huabin Zhang*. <strong>Overcoming Excitonic Bottlenecks via Molecular Intercalation into Donor Domains for NIR-Driven Hydrogen Evolution</strong>. <br> <em>Nat. Commun.</em>, under review. (Fifth Author)</li>
   </ol>
 </section>
