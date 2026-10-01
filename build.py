@@ -9,8 +9,9 @@ list-like (publications, research projects, honors, talks) is parsed from the CV
 import datetime, hashlib, html, pathlib, re, shutil
 
 HERE = pathlib.Path(__file__).resolve().parent
-CV_DIR = HERE.parent / "cv" / "CV-PhD"
-TEX = (CV_DIR / "main.tex").read_text(encoding="utf-8")
+CV_DIR = HERE.parent / "cv" / "CV-PhD"          # local machine: the Overleaf-synced CV
+SNAPSHOT = HERE / "cv" / "main.tex"               # copy kept in this repo so GitHub Actions can rebuild too
+TEX = (CV_DIR / "main.tex" if (CV_DIR / "main.tex").exists() else SNAPSHOT).read_text(encoding="utf-8")
 
 
 def brace(s, i):
@@ -142,6 +143,7 @@ def main():
     pdf = CV_DIR / "main.pdf"
     if pdf.exists():
         shutil.copy(pdf, HERE / "cv" / "Leshen_Zhang_CV.pdf")
+        shutil.copy(CV_DIR / "main.tex", SNAPSHOT)
     page = (tpl.replace("{{PUBLICATIONS}}", publications("Publications"))
                .replace("{{PREPRINTS}}", publications("Preprints"))
                .replace("{{RESEARCH}}", research())

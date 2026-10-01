@@ -1,0 +1,28 @@
+# Edit template.html (or upload a new assets/photo.jpg) on github.com -> this rebuilds index.html and republishes.
+name: Rebuild site
+on:
+  push:
+    branches: [main]
+    paths: [template.html, build.py, "assets/**", "cv/**"]
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 build.py
+      - name: Commit index.html if it changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then echo "index.html unchanged"; exit 0; fi
+          git commit -m "Rebuild index.html from template.html"
+          git push
+          # pushes made with GITHUB_TOKEN do not start a Pages build on their own
+          gh api -X POST "repos/${{ github.repository }}/pages/builds" || true
+        env:
+          GH_TOKEN: ${{ github.token }}
