@@ -8,7 +8,7 @@ Academic homepage of Leshen Zhang — https://leshenzhang.github.io/
 
 | 想改的内容 | 在哪里改 | 多久生效 |
 |---|---|---|
-| 论文列表、研究经历、奖项、报告、CV PDF | **Overleaf 上的 CV**（`main.tex`） | 本机每小时 :52 自动同步，约 1 小时内 |
+| 论文列表、研究经历、奖项、报告、CV PDF、Research Summary PDF | **Overleaf 上的 CV**（`main.tex`）和 **`research_summary.tex`** | 本机每小时 :52 自动同步，约 1 小时内 |
 | 简介、教育经历、研究岗位、Software、研究方向、导航栏 | 本仓库的 **`template.html`** | 保存后约 2 分钟 |
 | 照片 | 本仓库的 **`assets/photo.jpg`** | 上传后约 2 分钟 |
 
