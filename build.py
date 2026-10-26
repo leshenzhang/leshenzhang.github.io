@@ -33,8 +33,8 @@ def latex_to_html(s):
     s = s.replace("\\\\*", "\n").replace("\\\\", "\n")
     s = s.replace("~", " ").replace("---", "—").replace("--", "–").replace("\\&", "&")
     s = s.replace("\\textbullet{}", "•").replace("\\textrightarrow{}", "→").replace("\\textbar{}", "|")
-    s = s.replace("`", "‘").replace("'", "’")
-    s = s.replace("$\\times$", "×").replace("$\\rho$", "ρ").replace("``", "“").replace("''", "”")
+    s = s.replace("``", "“").replace("''", "”").replace("`", "‘").replace("'", "’")
+    s = s.replace("$\\times$", "×").replace("$\\rho$", "ρ")
     s = html.escape(s, quote=False)
     # \href{url}{text}
     while "\\href{" in s:
@@ -63,15 +63,8 @@ def section(name):
     return m.group(1) if m else ""
 
 
-def tile_text(venue, journal):
-    """Placeholder for papers without a figure: publication status (from the CV line) + journal."""
-    v = venue.lower()
-    status = "Under review" if "under review" in v else "To be submitted" if "to be submitted" in v else ""
-    return "<br>".join(x for x in (f"<b>{status}</b>" if status else "", journal) if x)
-
-
 def publications(name):
-    """One row per paper, as on kovenyu.com: thumbnail | title / authors / venue + links / author role."""
+    """Numbered list as on Homepage_as_CV: [tag] | title / authors / venue + links / author role."""
     out = []
     for m in re.finditer(r"\\item\[\\textbf\{\[([JS]\.\d)\]\}\] (.*)", section(name)):
         tag, body = m.group(1), re.sub(r"\\hypertarget\{[^}]*\}\{\}", "", m.group(2))
@@ -81,21 +74,20 @@ def publications(name):
         authors = latex_to_html(top.strip()[:t.start()].strip().rstrip("."))
         links = re.findall(r"\\href\{([^}]*)\}\{\[(PDF|DOI)\]\}", bottom)
         role = re.search(r"\(([^()]*)\)\s*$", bottom.strip())
-        journal = re.search(r"\\textit\{([^}]*)\}", bottom)
         venue = re.sub(r"\\href\{[^}]*\}\{\[(PDF|DOI)\]\}", "", bottom)
         venue = latex_to_html(venue[:venue.rindex("(")] if role else venue).strip().rstrip(".")
-        jname = latex_to_html(journal.group(1)) if journal else "In preparation"
-        venue = venue.replace(jname, f"<b>{jname}</b>", 1) if journal else venue
-        thumb = HERE / "assets" / "thumbs" / (tag.replace(".", "") + ".jpg")
-        pic = (f'<div class="thumb"><img src="assets/thumbs/{thumb.name}" alt="" loading="lazy"></div>' if thumb.exists()
-               else f'<div class="thumb tile">{tile_text(venue, jname if journal else "")}</div>')
         ttl = f'<a href="{doi_url}">{title}</a>' if doi_url else title
-        lk = "".join(f' / <a href="{u}"' + (f' data-goatcounter-click="pdf:{u.split("//", 1)[-1]}"' if k == "PDF" else "")
+        lk = "".join(f' · <a href="{u}"' + (f' data-goatcounter-click="pdf:{u.split("//", 1)[-1]}"' if k == "PDF" else "")
                      + f">{k}</a>" for u, k in links)
-        out.append(f'<div class="pub" id="{tag}">{pic}<div><div class="pt">{ttl}</div><div class="pa">{authors}</div>'
-                   f'<div class="pv"><span class="tag">[{tag}]</span>{venue}{lk}</div>'
-                   + (f'<div class="pr">{role.group(1)}</div>' if role else "") + "</div></div>")
+        out.append(f'<li id="{tag}"><span class="pub-tag">{tag}</span><div><div class="pub-title">{ttl}</div>'
+                   f'<div class="pub-authors">{authors}</div><div class="pub-venue">{venue}{lk}</div>'
+                   + (f'<div class="pub-role">{role.group(1)}</div>' if role else "") + "</div></li>")
     return "\n".join(out)
+
+
+def first_author_count():
+    """papers where the CV role line says First or Co-First Author"""
+    return len(re.findall(r"\((?:[^()]*\b)?First Author[^()]*\)\s*$", TEX, re.M | re.I))
 
 
 def research():
@@ -128,14 +120,14 @@ def dated_items(name):
     for m in re.finditer(r"\\item (.*?) \\hfill (?:\\mbox\{)?([^}\n]*?)\}?(?: \\\\)?\n(?:\s+(\\textit\{.*))?", section(name)):
         what, when, where = latex_to_html(m.group(1)), latex_to_html(m.group(2)), m.group(3)
         extra = f'<br><span class="where">{latex_to_html(where)}</span>' if where else ""
-        out.append(f'<li><span class="when">{when}</span>{what}{extra}</li>')
+        out.append(f'<li><span class="when">{when}</span><span>{what}{extra}</span></li>')
     return "\n".join(out)
 
 
-def awards():
-    """Honors from the CV as 'name, date' bullets (two columns in the page)."""
-    return "\n".join(f"<li>{m.group(2)}, <span class=\"nb\">{m.group(1)}</span></li>" for m in
-                     re.finditer(r'<span class="when">(.*?)</span>(.*?)</li>', dated_items("Honors and Awards")))
+def service():
+    """Professional Service lines: 'what \\hfill when'"""
+    return "\n".join(f'<li><span class="when">{latex_to_html(w)}</span><span>{latex_to_html(x)}</span></li>' for x, w in
+                     re.findall(r"^(\\textbf.*?) \\hfill (.*)$", section("Professional Service"), re.M))
 
 
 def main():
@@ -149,7 +141,11 @@ def main():
     page = (tpl.replace("{{PUBLICATIONS}}", publications("Publications"))
                .replace("{{PREPRINTS}}", publications("Preprints"))
                .replace("{{RESEARCH}}", research())
-               .replace("{{AWARDS}}", awards())
+               .replace("{{AWARDS}}", dated_items("Honors and Awards"))
+               .replace("{{SERVICE}}", service())
+               .replace("{{NPUB}}", str(section("Publications").count("\\item[")))
+               .replace("{{NPRE}}", str(section("Preprints").count("\\item[")))
+               .replace("{{NFIRST}}", str(first_author_count()))
                .replace("{{TALKS}}", dated_items("Scientific Presentations"))
                .replace("{{UPDATED}}", datetime.date.today().strftime("%B %Y"))
                # content hash in the CV link: a new CV gets a new URL, so no browser/CDN serves a stale copy
