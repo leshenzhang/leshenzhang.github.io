@@ -37,3 +37,4 @@ Academic homepage of Leshen Zhang — https://leshenzhang.github.io/
 - `update.sh` — local: pull, rebuild, commit, push
 - `.github/workflows/rebuild.yml` — rebuilds and republishes when `template.html`, `assets/` or `cv/` change on GitHub
 - Visit statistics: GoatCounter (`leshenzhang.goatcounter.com`); per-recipient links `?ref=<name>`
+- Layout (2026-10-26) adapted from [Homepage_as_CV](https://github.com/NTDXYG/Homepage_as_CV) by NTDXYG (MIT): sticky profile column, light/dark switch
