@@ -18,88 +18,100 @@
     document.documentElement.dataset.theme = t;
   })();
 </script>
-<!-- Layout adapted from Homepage_as_CV by NTDXYG (MIT): https://github.com/NTDXYG/Homepage_as_CV -->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Layout adapted from Homepage_as_CV by NTDXYG (MIT): https://github.com/NTDXYG/Homepage_as_CV; tabbed card design after https://jinghanyang.com/ (own code) -->
 <style>
   :root {
-    --paper:#fff; --ink:#16181d; --muted:#525a66; --faint:#6b7380; --rule:#e3e6ea; --soft:#f3f5f7;
-    --link:#1c4c78; --accent:#b4231f;
+    --bg:#f4f6f8; --paper:#fff; --ink:#1f2a37; --muted:#55636f; --faint:#8a97a3; --rule:#e2e8ee; --soft:#eef3f8;
+    --link:#2f6fa8; --accent:#b4231f; --tint:#eef3f8; --head:#a64fbd; --pill:#c98ad9;
+    --shadow:0 1px 2px rgba(31,42,55,.04),0 8px 28px rgba(31,42,55,.06);
     --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Times New Roman",serif;
     --sans:"Inter","Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif;
     color-scheme:light;
   }
   [data-theme="dark"] {
-    --paper:#0f1113; --ink:#e6e7e9; --muted:#a3aab4; --faint:#868d99; --rule:#2e353e; --soft:#191d22;
-    --link:#8db6dd; --accent:#ef7d73;
+    --bg:#0b0d10; --paper:#14171b; --ink:#e6e7e9; --muted:#a3aab4; --faint:#868d99; --rule:#2a3038; --soft:#1a1e23;
+    --link:#8db6dd; --accent:#ef7d73; --tint:#1d2c3b; --head:#d6a3e3; --pill:#8f5aa0; --shadow:none;
     color-scheme:dark;
   }
   * { box-sizing:border-box; }
-  html { scroll-behavior:smooth; scroll-padding-top:68px; -webkit-text-size-adjust:100%; }
-  body { margin:0; background:var(--paper); color:var(--ink); font:15.5px/1.75 var(--sans); -webkit-font-smoothing:antialiased; }
+  html { -webkit-text-size-adjust:100%; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:15.5px/1.65 var(--sans); -webkit-font-smoothing:antialiased; }
   a { color:var(--link); text-decoration:none; } a:hover { text-decoration:underline; text-underline-offset:2px; }
   img { max-width:100%; display:block; }
   .nb { white-space:nowrap; }                           /* keep names, places and dates on one line */
-  .wrap { max-width:1120px; margin:0 auto; padding:0 24px; }
+  .wrap { max-width:1240px; margin:0 auto; padding:0 34px; }
+  .panel { background:var(--paper); border:1px solid var(--rule); border-radius:18px; box-shadow:var(--shadow); }
 
-  /* top bar: name | section links | light/dark */
-  .topbar { position:sticky; top:0; z-index:10; background:var(--paper); border-bottom:1px solid var(--rule); }
-  .topbar .wrap { display:flex; align-items:center; gap:20px; min-height:54px; }
-  .brand { width:260px; flex:none; font-family:var(--serif); font-size:18px; font-weight:700; color:var(--ink); }
-  .topbar nav { display:flex; flex-wrap:wrap; gap:2px 20px; margin-right:auto; font-size:14.5px; }
-  .topbar nav a { color:var(--muted); } .topbar nav a:hover { color:var(--ink); text-decoration:none; }
-  .theme { display:flex; border:1px solid var(--rule); border-radius:999px; padding:2px; flex:none; }
+  /* two columns: sticky profile card | tabbed content */
+  .layout { display:grid; grid-template-columns:290px minmax(0,1fr); gap:32px; padding-top:56px; padding-bottom:40px; }
+  .sidebar { position:sticky; top:40px; align-self:start; font-size:14px; padding:14px 14px 20px; }
+  .portrait { width:100%; height:auto; aspect-ratio:1; object-fit:cover; border-radius:12px; }
+  .id { text-align:center; padding:18px 6px 16px; border-bottom:1px solid var(--rule); }
+  .id h1 { font-size:23px; font-weight:650; line-height:1.25; margin:0 0 8px; letter-spacing:-.01em; }
+  .id p { margin:0; color:var(--muted); font-size:13.5px; line-height:1.6; }
+  .metrics { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin:0; padding:14px 0; border-bottom:1px solid var(--rule); text-align:center; }
+  .metrics dd { margin:0; font-size:20px; font-weight:700; line-height:1.2; color:var(--head); }
+  .metrics dt { color:var(--faint); font-size:11px; line-height:1.3; }
+  .metrics div { display:flex; flex-direction:column-reverse; justify-content:flex-end; }
+  .contact { list-style:none; margin:0; padding:10px 0; }
+  .contact a { display:flex; align-items:center; gap:11px; color:var(--muted); padding:7px 10px; border-radius:10px; transition:background .16s, color .16s; }
+  .contact a:hover { color:var(--ink); background:var(--soft); text-decoration:none; }
+  .contact svg { width:16px; height:16px; flex:none; color:#4a6b8a; }
+  [data-theme="dark"] .contact svg { color:var(--link); }
+  .apply { background:var(--tint); border:1px solid var(--rule); border-radius:12px; padding:12px 14px; line-height:1.55; margin-top:6px; }
+  .apply b { display:block; color:var(--ink); margin-bottom:6px; }
+  .apply a { display:block; font-size:13px; overflow-wrap:anywhere; }
+
+  /* tab bar (pills) + light/dark switch */
+  .tabbar { position:sticky; top:22px; z-index:20; display:flex; align-items:center; gap:6px; padding:6px; margin-bottom:30px; border-radius:999px; overflow-x:auto; }
+  .tab { font:inherit; font-size:14.5px; font-weight:500; color:var(--muted); background:none; border:0; border-radius:999px; padding:9px 18px; cursor:pointer; white-space:nowrap; transition:color .18s, background .18s; }
+  .tab:hover { color:var(--ink); background:var(--soft); text-decoration:none; }
+  .tab[aria-selected="true"] { color:#fff; background:var(--pill); box-shadow:0 4px 12px rgba(201,138,217,.32); }
+  .theme { display:flex; margin-left:auto; border:1px solid var(--rule); border-radius:999px; padding:2px; flex:none; }
   .theme button { font:inherit; font-size:12.5px; border:0; background:none; color:var(--muted); padding:2px 12px; border-radius:999px; cursor:pointer; }
   .theme button[aria-pressed="true"] { background:var(--ink); color:var(--paper); }
 
-  /* two columns: sticky profile | content */
-  .layout { display:grid; grid-template-columns:260px minmax(0,1fr); gap:48px; padding-top:32px; padding-bottom:40px; }
-  .sidebar { position:sticky; top:86px; align-self:start; font-size:14px; }
-  .id { display:flex; gap:14px; align-items:flex-start; padding-bottom:18px; border-bottom:1px solid var(--rule); }
-  .id img { width:96px; height:96px; object-fit:cover; border-radius:4px; flex:none; }
-  .id h1 { font-family:var(--serif); font-size:24px; line-height:1.2; margin:2px 0 6px; }
-  .id p { margin:0; color:var(--muted); font-size:13.5px; line-height:1.5; }
-  .metrics { display:grid; grid-template-columns:repeat(3,1fr); margin:0; padding:14px 0; border-bottom:1px solid var(--rule); }
-  .metrics dd { margin:0; font-family:var(--serif); font-size:20px; font-weight:700; line-height:1.2; }
-  .metrics dt { color:var(--faint); font-size:11.5px; line-height:1.3; }
-  .metrics div { display:flex; flex-direction:column-reverse; justify-content:flex-end; }
-  .contact { list-style:none; margin:0; padding:14px 0; }
-  .contact a { display:flex; align-items:center; gap:9px; color:var(--muted); line-height:2; }
-  .contact a:hover { color:var(--ink); text-decoration:none; }
-  .contact svg { width:15px; height:15px; flex:none; color:var(--faint); }
-  .card { background:var(--soft); border:1px solid var(--rule); padding:12px 14px; line-height:1.55; }
-  .card b { display:block; color:var(--accent); margin-bottom:6px; }
-  .card a { display:block; font-size:13px; overflow-wrap:anywhere; }
-
-  /* content */
-  .intro p { margin:0 0 14px; }
-  .hl { color:var(--accent); font-weight:700; }
-  section { margin-top:40px; }
-  h2 { font-family:var(--serif); font-size:21px; font-weight:700; margin:0 0 14px; padding-bottom:8px; border-bottom:1px solid var(--rule); }
-  h3 { font-family:var(--serif); font-size:16.5px; margin:26px 0 8px; }
+  .view { display:none; } .view.active { display:block; }
+  .view.active .module { animation:rise .45s cubic-bezier(.2,.7,.3,1) both; }
+  .view.active .module + .module { animation-delay:.06s; }
+  @keyframes rise { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion:reduce) { .view.active .module { animation:none; } }
+  .module { padding:30px 32px; margin-bottom:22px; }
+  .intro a, .t-sub a { font-weight:600; border-bottom:1.5px solid rgba(47,111,168,.28); }
+  .intro a:hover { text-decoration:none; border-bottom-color:currentColor; background:var(--tint); }
+  h2 { display:flex; align-items:center; gap:14px; font-size:12.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--head); margin:0 0 18px; }
+  h2::after { content:""; flex:1; height:1px; background:var(--rule); }
+  h3 { font-size:16px; font-weight:650; margin:26px 0 8px; }
+  h3:first-of-type { margin-top:4px; }
   h4 { font-size:14.5px; margin:16px 0 4px; font-style:italic; color:var(--muted); font-weight:600; }
-  .note { color:var(--faint); font-size:13px; margin:-4px 0 6px; }
+  .note { color:var(--faint); font-size:13px; margin:-6px 0 6px; }
+  .intro p { margin:0 0 14px; } .intro p:last-child { margin-bottom:0; }
+  .lead { font-size:18.5px; line-height:1.6; color:var(--ink); }
+  .hl { color:var(--accent); font-weight:700; }
 
   /* research interests: label | description */
-  .interests { margin:0 0 18px; }
-  .interests div { display:grid; grid-template-columns:300px minmax(0,1fr); gap:16px; padding:4px 0; }
+  .interests { margin:0 0 20px; }
+  .interests div { display:grid; grid-template-columns:290px minmax(0,1fr); gap:16px; padding:4px 0; }
   .interests dt { font-weight:600; } .interests dt a { color:var(--ink); }
   .interests dd { margin:0; color:var(--muted); }
-  figure { margin:0; } figure img { width:100%; border:1px solid var(--rule); border-radius:4px; background:#fff; }
-  figcaption { color:var(--faint); font-size:13px; margin-top:4px; }
+  figure { margin:0; } figure img { width:100%; border:1px solid var(--rule); border-radius:10px; background:#fff; }
 
   /* education & positions: dates | what | with whom */
   .timeline { list-style:none; margin:0; padding:0; }
-  .timeline li { display:grid; grid-template-columns:150px minmax(0,1fr) auto; gap:18px; padding:10px 0; border-bottom:1px solid var(--rule); }
+  .timeline li { display:grid; grid-template-columns:150px minmax(0,1fr) auto; gap:18px; padding:12px 0; border-bottom:1px solid var(--rule); }
   .timeline li:last-child { border-bottom:0; }
   .t-date { color:var(--faint); font-size:13px; padding-top:2px; line-height:1.5; }
   .t-sub { color:var(--muted); font-size:14px; }
   .t-side { text-align:right; font-size:14px; }
 
-  /* publications */
-  .pubs { list-style:none; margin:0; padding:0; }
-  .pubs li { display:grid; grid-template-columns:40px minmax(0,1fr); gap:6px; padding:10px 0; scroll-margin-top:70px; }
-  .pubs li:target { background:var(--soft); }
-  .pub-tag { color:var(--faint); font-size:12.5px; padding-top:3px; }
-  .pub-title { font-family:var(--serif); font-weight:700; font-size:16px; line-height:1.45; }
+  /* publications: each one a light card */
+  .pubs { list-style:none; margin:0; padding:0; display:grid; gap:12px; }
+  .pubs li { display:grid; grid-template-columns:42px minmax(0,1fr); gap:6px; padding:16px 18px; border:1px solid var(--rule); border-radius:12px; background:var(--paper); scroll-margin-top:96px; transition:background .6s; }
+  .pubs li:target, .pubs li.flash { background:var(--tint); }
+  .pub-tag { color:var(--head); font-size:12.5px; font-weight:600; padding-top:3px; }
+  .pub-title { font-weight:650; font-size:15.5px; line-height:1.5; }
   .pub-title a { color:var(--ink); }
   .pub-authors, .pub-venue { font-size:14px; line-height:1.6; }
   .pub-authors { color:var(--muted); }
@@ -108,17 +120,17 @@
   strong.me { color:var(--ink); font-weight:700; text-decoration:underline; text-underline-offset:2px; }
 
   /* research projects (from the CV) */
-  .proj { padding:8px 0 10px; border-bottom:1px solid var(--rule); scroll-margin-top:70px; }
-  .proj .ptitle { font-weight:700; }
+  .proj { padding:8px 0 10px; border-bottom:1px solid var(--rule); scroll-margin-top:96px; }
+  .proj .ptitle { font-weight:650; }
   .proj .pi { color:var(--faint); font-size:13px; font-style:italic; }
   .proj p { margin:2px 0 0; color:var(--muted); font-size:14.5px; }
   .proj .ref { font-weight:400; font-size:13px; white-space:nowrap; }
-  h3[id], h4[id] { scroll-margin-top:70px; }
+  h3[id], h4[id] { scroll-margin-top:96px; }
 
   /* software */
-  .sw > div { display:grid; grid-template-columns:110px minmax(0,1fr); gap:16px; padding:8px 0; border-bottom:1px solid var(--rule); }
+  .sw > div { display:grid; grid-template-columns:110px minmax(0,1fr); gap:16px; padding:10px 0; border-bottom:1px solid var(--rule); }
   .sw > div:last-child { border-bottom:0; }
-  .sw b { font-family:var(--serif); font-size:16px; }
+  .sw b { font-size:16px; }
   .sw p { margin:0; font-size:14.5px; } .sw .swlinks { margin-top:2px; font-size:13.5px; }
 
   /* honors, service, talks: date | text */
@@ -127,21 +139,21 @@
   ul.dated .when { color:var(--faint); font-size:13px; padding-top:1px; }
   ul.dated .where { color:var(--faint); font-style:italic; }
 
-  footer { border-top:1px solid var(--rule); color:var(--faint); font-size:13px; }
-  footer .wrap { padding-top:16px; padding-bottom:20px; }
+  footer { color:var(--faint); font-size:13px; padding:0 0 28px; text-align:center; }
 
   @media (max-width:900px) {
-    .brand { width:auto; }
-    .layout { grid-template-columns:1fr; gap:8px; padding-top:20px; }
+    .layout { grid-template-columns:minmax(0,1fr); gap:20px; padding-top:20px; }
     .sidebar { position:static; }
-    .contact { display:flex; flex-wrap:wrap; gap:0 18px; }
+    .sidebar .portrait { width:180px; margin:6px auto 0; }
+    .tabbar { top:8px; }
+    .contact { display:flex; flex-wrap:wrap; justify-content:center; gap:0 4px; }
     .interests div { grid-template-columns:1fr; gap:0; padding:6px 0; }
   }
   @media (max-width:640px) {
-    .wrap { padding:0 16px; }
-    .topbar .wrap { flex-wrap:wrap; gap:4px 12px; padding-top:8px; padding-bottom:8px; }
-    .topbar nav { order:3; width:100%; gap:2px 14px; font-size:13.5px; }
-    .theme { margin-left:auto; }
+    .wrap { padding:0 14px; }
+    .module { padding:22px 18px; }
+    .sidebar .portrait { width:150px; }
+    .tab { padding:6px 13px; font-size:14px; }
     .timeline li { grid-template-columns:1fr; gap:0; }
     .t-side { text-align:left; }
     .pubs li { grid-template-columns:1fr; gap:0; }
@@ -150,24 +162,12 @@
 </style>
 </head>
 <body>
-<header class="topbar"><div class="wrap">
-  <a class="brand" href="#top">Leshen Zhang</a>
-  <nav aria-label="Sections">
-    <a href="#interests">Interests</a><a href="#experience">Experience</a><a href="#publications">Publications</a><a href="#research">Research</a><a href="#software">Software</a><a href="#honors">Honors</a>
-  </nav>
-  <div class="theme" role="group" aria-label="Theme">
-    <button type="button" data-theme-value="light" aria-pressed="false">Light</button><button type="button" data-theme-value="dark" aria-pressed="false">Dark</button>
-  </div>
-</div></header>
-
 <div class="wrap layout" id="top">
-<aside class="sidebar" aria-label="Profile">
+<aside class="sidebar panel" aria-label="Profile">
+  <img class="portrait" src="assets/photo.jpg" alt="Photo of Leshen Zhang" width="400" height="400">
   <div class="id">
-    <img src="assets/photo.jpg" alt="Photo of Leshen Zhang" width="96" height="96">
-    <div>
       <h1>Leshen Zhang</h1>
       <p>B.S. in Chemistry (expected 2027)<br><a href="https://chemistry.fudan.edu.cn/">Fudan University</a><br>Research Assistant, <a href="https://www.chemistry.ucla.edu/" class="nb">UC Los Angeles</a></p>
-    </div>
   </div>
   <dl class="metrics">
     <div><dt>Published</dt><dd>3</dd></div>
@@ -181,7 +181,7 @@
     <li><a href="https://orcid.org/0009-0008-9143-6737"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M8.5 10v7M8.5 7v.01M12 17v-7h2.2a3.5 3.5 0 0 1 0 7z"/></svg>ORCID</a></li>
     <li><a href="https://github.com/leshenzhang"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>GitHub</a></li>
   </ul>
-  <div class="card">
+  <div class="apply">
     <b>I am applying to PhD programs for <span class="nb">Fall 2027</span>.</b>
     <a href="mailto:zhangls23@m.fudan.edu.cn">zhangls23@m.fudan.edu.cn</a>
     <a href="mailto:leshen.zhang.cn@gmail.com">leshen.zhang.cn@gmail.com</a>
@@ -189,12 +189,21 @@
 </aside>
 
 <main>
-<div class="intro" id="about">
-  <p>I am an undergraduate in the <a href="https://chemistry.fudan.edu.cn/">Department of Chemistry</a> at <a href="https://www.fudan.edu.cn/en/">Fudan University</a>, advised by <a href="https://nanolab.fudan.edu.cn/" class="nb">Prof. Gengfeng Zheng</a>. I am currently a research assistant in the <a href="https://www.chemistry.ucla.edu/">Department of Chemistry and Biochemistry</a> at <span class="nb">UC Los Angeles</span>, working with <a href="https://www.chem.ucla.edu/~ana/" class="nb">Prof. Anastassia N. Alexandrova</a>. Previously, I worked with <a href="https://wanlulilab.ucsd.edu/" class="nb">Prof. Wan-Lu Li</a> in the <a href="https://nanoengineering.ucsd.edu/">Department of Chemical and Nano Engineering</a> at <span class="nb">UC San Diego</span>.</p>
-  <p>Electrocatalysts work in water and under applied potential, and their surfaces reconstruct during the reaction. My research asks <span class="hl">how interfacial water and reactants behave on these restructuring surfaces</span>, and moves toward a non-equilibrium picture of electrochemistry. To study this at realistic scale, I use machine-learning potentials and build AI tools that run large calculation campaigns with a human in the loop.</p>
-</div>
+<nav class="tabbar panel" role="tablist" aria-label="Pages">
+  <a class="tab" role="tab" href="#home" data-view="home">Home</a><a class="tab" role="tab" href="#publications" data-view="publications">Publications</a><a class="tab" role="tab" href="#research" data-view="research">Research</a><a class="tab" role="tab" href="#experience" data-view="experience">Experience</a>
+  <div class="theme" role="group" aria-label="Theme">
+    <button type="button" data-theme-value="light" aria-pressed="false">Light</button><button type="button" data-theme-value="dark" aria-pressed="false">Dark</button>
+  </div>
+</nav>
 
-<section id="interests">
+<div class="view" id="view-home">
+<section class="module panel intro" id="about">
+  <h2>About Me</h2>
+  <p>I am an undergraduate in the <a href="https://chemistry.fudan.edu.cn/">Department of Chemistry</a> at <a href="https://www.fudan.edu.cn/en/">Fudan University</a>, advised by <a href="https://nanolab.fudan.edu.cn/" class="nb">Prof. Gengfeng Zheng</a>. I am currently a research assistant in the <a href="https://www.chemistry.ucla.edu/">Department of Chemistry and Biochemistry</a> at <span class="nb">UC Los Angeles</span>, working with <a href="https://www.chem.ucla.edu/~ana/" class="nb">Prof. Anastassia N. Alexandrova</a>. Previously, I worked with <a href="https://wanlulilab.ucsd.edu/" class="nb">Prof. Wan-Lu Li</a> in the <a href="https://nanoengineering.ucsd.edu/">Department of Chemical and Nano Engineering</a> at <span class="nb">UC San Diego</span>.</p>
+  <p class="lead">Electrocatalysts work in water and under applied potential, and their surfaces reconstruct during the reaction. My research asks <span class="hl">how interfacial water and reactants behave on these restructuring surfaces</span>, and moves toward a non-equilibrium picture of electrochemistry. To study this at realistic scale, I use machine-learning potentials and build AI tools that run large calculation campaigns with a human in the loop.</p>
+</section>
+
+<section class="module panel" id="interests">
   <h2>Research Interests</h2>
   <dl class="interests">
     <div><dt><a href="#ra">Surface Reconstruction &amp; Interfacial Structure</a></dt><dd>Interfacial water and cavitation, IrO<sub>x</sub> cluster ensembles, cation effects, reconstructed Cu electrodes</dd></div>
@@ -206,8 +215,10 @@
     <img src="assets/research_overview.jpg" alt="Research overview: materials DFT under operating conditions and molecular simulation of biomolecules are linked by machine-learning potentials, supported by AI-assisted research software (CatGo, ChemMate, SPARK).">
   </figure>
 </section>
+</div>
 
-<section id="experience">
+<div class="view" id="view-experience">
+<section class="module panel" id="positions">
   <h2>Education &amp; Research Positions</h2>
   <ol class="timeline">
     <li><span class="t-date">09/2026 – 12/2026<br>(expected)</span><div><b>Research Assistant</b> · University of California, Los Angeles<div class="t-sub">Site-resolved C–C coupling on restructured Cu electrodes</div></div><a class="t-side nb" href="https://www.chem.ucla.edu/~ana/">Prof. Anastassia N. Alexandrova</a></li>
@@ -217,60 +228,7 @@
   </ol>
 </section>
 
-<section id="publications">
-  <h2>Publications</h2>
-  <p class="note"><sup>‡</sup>equal contribution · *corresponding author · <strong class="me">underlined</strong>: me</p>
-  <h3>Journal Articles</h3>
-  <ol class="pubs">
-<li id="J.1"><span class="pub-tag">J.1</span><div><div class="pub-title"><a href="https://doi.org/10.1039/D6SC02460B">Defect-Mediated Regulation of Interfacial Hydrophobic Transport via Cavitation Thermodynamics</a></div><div class="pub-authors"><strong class="me">Leshen Zhang</strong>, Guangsheng Liu, Xiao Ma, Abdulrahman Allangawi, Wan-Lu Li*</div><div class="pub-venue"><em>Chem. Sci.</em> <strong>2026</strong>, 17, 15735–15744 · <a href="https://leshenzhang.github.io/papers/J1_Zhang2026_ChemSci.pdf" data-goatcounter-click="pdf:leshenzhang.github.io/papers/J1_Zhang2026_ChemSci.pdf">PDF</a> · <a href="https://doi.org/10.1039/D6SC02460B">DOI</a></div><div class="pub-role">Sole First Author</div></div></li>
-<li id="J.2"><span class="pub-tag">J.2</span><div><div class="pub-title"><a href="https://doi.org/10.1039/D6DD00273K">CatGo: Bridging CLI Coding Agents with Interactive Structure and Workflow Management for Computational Chemistry</a></div><div class="pub-authors">Guangsheng Liu<sup>‡</sup>, Xiao Ma<sup>‡</sup>, <strong class="me">Leshen Zhang</strong><sup>‡</sup>, Jenedith Pascasio, Jonathan Yang, Yuxiang Chen, Wan-Lu Li*</div><div class="pub-venue"><em>Digit. Discov.</em> <strong>2026</strong>, 5, 3825–3849 · <a href="https://leshenzhang.github.io/papers/J2_Liu2026_DigitDiscov.pdf" data-goatcounter-click="pdf:leshenzhang.github.io/papers/J2_Liu2026_DigitDiscov.pdf">PDF</a> · <a href="https://doi.org/10.1039/D6DD00273K">DOI</a></div><div class="pub-role">Co-First Author, Rank Third</div></div></li>
-<li id="J.3"><span class="pub-tag">J.3</span><div><div class="pub-title"><a href="https://doi.org/10.1002/anie.202510241">Switching Photocatalytic Methane Oxidation Toward Ethanol by Tuning Spin States</a></div><div class="pub-authors">Shuya Hao<sup>‡</sup>, Maoyin Wang<sup>‡</sup>, <strong class="me">Leshen Zhang</strong>, Ximeng Lv, Chen Peng, Yuhang Huang, Pei Yuan*, Qing Han*, Gengfeng Zheng*</div><div class="pub-venue"><em>Angew. Chem. Int. Ed.</em> <strong>2025</strong>, 64, e202510241 · <a href="https://leshenzhang.github.io/papers/J3_Hao2025_AngewChem.pdf" data-goatcounter-click="pdf:leshenzhang.github.io/papers/J3_Hao2025_AngewChem.pdf">PDF</a> · <a href="https://doi.org/10.1002/anie.202510241">DOI</a></div><div class="pub-role">Third Author</div></div></li>
-  </ol>
-  <h3>Preprints &amp; Papers Under Review</h3>
-  <ol class="pubs">
-<li id="S.1"><span class="pub-tag">S.1</span><div><div class="pub-title"><a href="https://doi.org/10.26434/chemrxiv.15011517/v1">Incorporating Polarization into ML/MM Endpoint Calculations for Protein–Ligand Affinity Ranking</a></div><div class="pub-authors"><strong class="me">Leshen Zhang</strong><sup>‡</sup>, Xujian Wang<sup>‡</sup>, Taoyu Niu, Xuchao Zhou, Xiao Ma, Guangsheng Liu, Olexandr Isayev*, Junmei Wang*, Wan-Lu Li*</div><div class="pub-venue"><em>JACS Au</em>, under review · <a href="https://chemrxiv.org/doi/pdf/10.26434/chemrxiv.15011517/v1" data-goatcounter-click="pdf:chemrxiv.org/doi/pdf/10.26434/chemrxiv.15011517/v1">PDF</a> · <a href="https://doi.org/10.26434/chemrxiv.15011517/v1">DOI</a></div><div class="pub-role">Co-First Author, Rank First</div></div></li>
-<li id="S.2"><span class="pub-tag">S.2</span><div><div class="pub-title"><a href="https://doi.org/10.26434/chemrxiv.15009834/v1">Local-Environment Populations Govern Size-Dependent OER Activity in Supported Subnanometer IrO<sub>x</sub> Clusters</a></div><div class="pub-authors">Guangsheng Liu<sup>‡</sup>, <strong class="me">Leshen Zhang</strong><sup>‡</sup>, Xiao Ma, Abdulrahman Allangawi, Huabin Zhang*, Wan-Lu Li*</div><div class="pub-venue"><em>Adv. Funct. Mater.</em>, under review · <a href="https://leshenzhang.github.io/papers/S2_Liu2026_ChemRxiv.pdf" data-goatcounter-click="pdf:leshenzhang.github.io/papers/S2_Liu2026_ChemRxiv.pdf">PDF</a> · <a href="https://doi.org/10.26434/chemrxiv.15009834/v1">DOI</a></div><div class="pub-role">Co-First Author, Rank Second</div></div></li>
-<li id="S.3"><span class="pub-tag">S.3</span><div><div class="pub-title"><a href="https://doi.org/10.26434/chemrxiv.15008697/v1">Surface Geometry Governs Cation Effects via Nonlocal Solvent Gating</a></div><div class="pub-authors">Xiao Ma, <strong class="me">Leshen Zhang</strong>, Guangsheng Liu, Abdulrahman Allangawi, Huabin Zhang*, Wan-Lu Li*</div><div class="pub-venue"><em>Angew. Chem. Int. Ed.</em>, under review · <a href="https://chemrxiv.org/doi/pdf/10.26434/chemrxiv.15008697/v1" data-goatcounter-click="pdf:chemrxiv.org/doi/pdf/10.26434/chemrxiv.15008697/v1">PDF</a> · <a href="https://doi.org/10.26434/chemrxiv.15008697/v1">DOI</a></div><div class="pub-role">Second Author</div></div></li>
-<li id="S.4"><span class="pub-tag">S.4</span><div><div class="pub-title"><a href="https://doi.org/10.26434/chemrxiv.15003924/v1">Intercalation-Modulated Electronic Regulation of Nitrogen Reduction on Doped MoS<sub>2</sub></a></div><div class="pub-authors">Guangsheng Liu<sup>‡</sup>, Xiao Ma<sup>‡</sup>, <strong class="me">Leshen Zhang</strong><sup>‡</sup>, Xujian Wang, Abdulrahman Allangawi, Shaowei Li, Wan-Lu Li*</div><div class="pub-venue">To be submitted · <a href="https://leshenzhang.github.io/papers/S4_Liu2026_ChemRxiv.pdf" data-goatcounter-click="pdf:leshenzhang.github.io/papers/S4_Liu2026_ChemRxiv.pdf">PDF</a> · <a href="https://doi.org/10.26434/chemrxiv.15003924/v1">DOI</a></div><div class="pub-role">Co-First Author, Rank Third</div></div></li>
-<li id="S.5"><span class="pub-tag">S.5</span><div><div class="pub-title"><a href="https://doi.org/10.26434/chemrxiv.15006055/v1">ChemMate: An Autonomous Research Mate for the Full Computational Chemistry Research Lifecycle, from Ideation to Manuscript</a></div><div class="pub-authors">Guangsheng Liu<sup>‡</sup>, <strong class="me">Leshen Zhang</strong><sup>‡</sup>, Xiao Ma, I-Shan Tsai, Jinyi Zhang, Wan-Lu Li*</div><div class="pub-venue">To be submitted · <a href="https://leshenzhang.github.io/papers/S5_Liu2026_ChemRxiv.pdf" data-goatcounter-click="pdf:leshenzhang.github.io/papers/S5_Liu2026_ChemRxiv.pdf">PDF</a> · <a href="https://doi.org/10.26434/chemrxiv.15006055/v1">DOI</a></div><div class="pub-role">Co-First Author, Rank Second</div></div></li>
-<li id="S.6"><span class="pub-tag">S.6</span><div><div class="pub-title">Interfacial Proton Relay Enables CO<sub>2</sub>-to-Methanol Electroreduction on Layered Cobalt Phthalocyanine</div><div class="pub-authors">Tingsong Li<sup>‡</sup>, Jifeng Wu<sup>‡</sup>, Abdulrahman Allangawi<sup>‡</sup>, <strong class="me">Leshen Zhang</strong>, Wan-Lu Li*, Xiangyun Xiao, Miao Hu, Mohd Adnan Khan, Rashed Aleisa, Shouwei Zuo, Heng Guo, Kuo-Wei Huang*, Ying Zhou*, Huabin Zhang*, Magnus Rueping*</div><div class="pub-venue"><em>J. Am. Chem. Soc.</em>, under review</div><div class="pub-role">Fourth Author</div></div></li>
-<li id="S.7"><span class="pub-tag">S.7</span><div><div class="pub-title"><a href="https://doi.org/10.26434/chemrxiv.15008812/v1">Leveraging Machine Learning Interatomic Potentials into Fitting Fast and Accurate AMBER-Compatible Precise Force Field</a></div><div class="pub-authors">Xuchao Zhou, Xujian Wang, Jiahao Xie, <strong class="me">Leshen Zhang</strong>, Junmei Wang*</div><div class="pub-venue"><em>JACS Au</em>, under review · <a href="https://chemrxiv.org/doi/pdf/10.26434/chemrxiv.15008812/v1" data-goatcounter-click="pdf:chemrxiv.org/doi/pdf/10.26434/chemrxiv.15008812/v1">PDF</a> · <a href="https://doi.org/10.26434/chemrxiv.15008812/v1">DOI</a></div><div class="pub-role">Fourth Author</div></div></li>
-<li id="S.8"><span class="pub-tag">S.8</span><div><div class="pub-title">Overcoming Excitonic Bottlenecks via Molecular Intercalation into Donor Domains for NIR-Driven Hydrogen Evolution</div><div class="pub-authors">Yunzhi Wang<sup>‡</sup>, Chengyang Feng<sup>‡</sup>, Lijie Wang<sup>‡</sup>, Yang Cheng, <strong class="me">Leshen Zhang</strong>, Yinglu Jia, Lingyun Zhao, Abdulrahman Allangawi, Weiwei Li*, Wan-Lu Li*, Martin Heeney, Magnus Rueping, Omar F. Mohammed*, Huabin Zhang*</div><div class="pub-venue"><em>Nat. Commun.</em>, under review</div><div class="pub-role">Fifth Author</div></div></li>
-  </ol>
-</section>
-
-<section id="research">
-  <h2>Research Projects</h2>
-<h3>I. First-Principles Calculations for Materials and Catalysis</h3>
-<h4 id="ra">(a) Surface Reconstruction and Interfacial Structure</h4>
-<div class="proj"><div class="ptitle">Defect-Mediated Regulation of Interfacial Hydrophobic Transport via Cavitation Thermodynamics <a class="ref" href="#J.1">[J.1]</a></div><div class="pi"><em>PI: <strong>Prof. Wan-Lu Li</strong>, UC San Diego, USA</em></div><p>Revealed that surface defects regulate interfacial hydrophobic transport by tuning the local cavitation free energy, establishing cavitation thermodynamics as a descriptor linking interfacial water structure to reactivity</p></div>
-<div class="proj"><div class="ptitle">Local-Environment Populations Govern Size-Dependent OER Activity in Supported Subnanometer IrO<sub>x</sub> Clusters <a class="ref" href="#S.2">[S.2]</a></div><div class="pi"><em>PI: <strong>Prof. Wan-Lu Li</strong>, UC San Diego, USA</em></div><p>Formulated a constant-potential ensemble-sampling methodology that maps site-specific overpotentials and activation barriers across cluster sizes and configurations, bridging local site motifs with microkinetics to identify the ideal size window for Ir clusters</p></div>
-<div class="proj"><div class="ptitle">Surface Geometry Governs Cation Effects via Nonlocal Solvent Gating <a class="ref" href="#S.3">[S.3]</a></div><div class="pi"><em>PI: <strong>Prof. Wan-Lu Li</strong>, UC San Diego, USA</em></div><p>Showed that Au surface geometry governs alkali-cation effects in CO<sub>2</sub> reduction: interfacial water reverses the cation effects and propagates them nonlocally to pristine terraces, explaining the volcano-shaped cation dependence on polycrystalline Au</p></div>
-<div class="proj"><div class="ptitle">Site-Resolved C–C Coupling on Restructured Cu Electrodes (ongoing)</div><div class="pi"><em>PI: <strong>Prof. Anastassia N. Alexandrova</strong>, UC Los Angeles, USA</em></div><p>Investigating how kinetically trapped, adsorbate-roughened Cu electrodes catalyze C–C coupling during CO<sub>2</sub> reduction, and using site-resolved KMC simulation to identify the classes of restructured Cu sites that dominate the coupling rate</p></div>
-<h4 id="rb">(b) Catalytic Mechanisms and Multiscale Modeling</h4>
-<div class="proj"><div class="ptitle">Switching Photocatalytic Methane Oxidation Toward Ethanol by Tuning Spin States <a class="ref" href="#J.3">[J.3]</a></div><div class="pi"><em>PI: <strong>Prof. Gengfeng Zheng</strong>, Fudan University, China</em></div><p><em>Experiment:</em> developed a Zn–O–Fe catalyst that selectively photo-oxidizes CH<sub>4</sub> to ethanol<br><em>Computation:</em> revealed that the medium Fe spin state preferentially stabilizes •CH<sub>2</sub>OH over •OCH<sub>3</sub>, explaining why the catalyst with medium-spin polarization favors ethanol</p></div>
-<div class="proj"><div class="ptitle">Intercalation-Modulated Electronic Regulation of Nitrogen Reduction on Doped MoS<sub>2</sub> <a class="ref" href="#S.4">[S.4]</a></div><div class="pi"><em>PI: <strong>Prof. Wan-Lu Li</strong>, UC San Diego, USA</em></div><p>Developed a screening strategy that excludes unstable catalysts before DFT and distilled an interpretable SISSO descriptor governing NRR activity and selectivity against HER</p></div>
-<div class="proj"><div class="ptitle">Multiscale Modeling of PEM Water-Electrolysis OER: From DFT to Device</div><div class="pi"><em>PI: <strong>Prof. Wan-Lu Li</strong>, UC San Diego, USA</em></div><p>Bridged DFT, microkinetic modeling, and mass-transfer simulation in a multiscale model, showing that catalyst morphology governs local mass transport and thereby the apparent activity</p></div>
-<h3 id="rc">II. AI-Assisted Scientific Software</h3>
-<div class="proj"><div class="ptitle">CatGo: Bridging CLI Coding Agents with Interactive Structure and Workflow Management for Computational Chemistry <a class="ref" href="#J.2">[J.2]</a></div><div class="pi"><em>PI: <strong>Prof. Wan-Lu Li</strong>, UC San Diego, USA</em></div><p>Established an open-source platform unifying the structure → DFT → HPC → analysis chain, and bridged AI coding agents to its workbench, enabling high-throughput calculations</p></div>
-<div class="proj"><div class="ptitle">ChemMate: A Conversational Research Collaborator for Computational Chemistry <a class="ref" href="#S.5">[S.5]</a></div><div class="pi"><em>PI: <strong>Prof. Wan-Lu Li</strong>, UC San Diego, USA</em></div><p>Established an autonomous research collaborator that runs entire projects from ideation to manuscript under human gates, demonstrated in five campaigns with reproducible results</p></div>
-<h3 id="rd">III. Molecular Modeling: Electrostatics in Enzyme Design</h3>
-<div class="proj"><div class="ptitle">Incorporating Polarization into ML/MM Endpoint Calculations for Protein–Ligand Affinity Ranking <a class="ref" href="#S.1">[S.1]</a></div><div class="pi"><em>PI: <strong>Prof. Wan-Lu Li</strong>, UC San Diego, and <strong>Prof. Junmei Wang</strong>, University of Pittsburgh, USA</em></div><p>Developed the PCME method for ML/MM embedding, which feeds conformation-resolved ML charges of the ligand and binding site into the Poisson–Boltzmann solver, accurately predicting binding affinities with high computational efficiency</p></div>
-</section>
-
-<section id="software">
-  <h2>Software</h2>
-  <div class="sw">
-    <div><b>CatGo</b><div><p>Open-source structure → DFT → HPC → analysis workbench that AI coding agents can drive, with every action reviewable. <em>Digit. Discov.</em> 2026.</p>
-      <p class="swlinks"><a href="https://doi.org/10.1039/D6DD00273K">Paper</a> · <a href="https://leshenzhang.github.io/papers/J2_Liu2026_DigitDiscov.pdf" data-goatcounter-click="pdf:leshenzhang.github.io/papers/J2_Liu2026_DigitDiscov.pdf">PDF</a> · <a href="https://github.com/Hello-QM/catgo-LRG">GitHub</a> · <a href="https://doi.org/10.5281/zenodo.19709425">Zenodo</a></p></div></div>
-    <div><b>ChemMate</b><div><p>Autonomous research collaborator that carries computational-chemistry projects from ideation to manuscript under human gates. ChemRxiv 2026.</p>
-      <p class="swlinks"><a href="https://doi.org/10.26434/chemrxiv.15006055/v1">Preprint</a> · <a href="https://leshenzhang.github.io/papers/S5_Liu2026_ChemRxiv.pdf" data-goatcounter-click="pdf:leshenzhang.github.io/papers/S5_Liu2026_ChemRxiv.pdf">PDF</a></p></div></div>
-    <div><b>SPARK</b><div><p>On-the-fly kinetic Monte Carlo for surface reactions.</p>
-      <p class="swlinks"><a href="https://github.com/WanluLigroupUCSD/SPARK">GitHub</a></p></div></div>
-  </div>
-</section>
-
-<section id="honors">
+<section class="module panel" id="honors">
   <h2>Honors, Service &amp; Presentations</h2>
   <h3>Honors and Awards</h3>
   <ul class="dated">
@@ -291,10 +249,68 @@
 <li><span class="when">11/2025</span><span>“Switching Photocatalytic Methane Oxidation Toward Ethanol by Tuning Spin States”<br><span class="where"><em>University of Chinese Academy of Sciences, Graduate Student Forum 2025 on Energy Catalysis</em>, Dalian, China</span></span></li>
   </ul>
 </section>
-</main>
 </div>
 
-<footer><div class="wrap">© Leshen Zhang · Last updated November 2026</div></footer>
+<div class="view" id="view-publications">
+<section class="module panel" id="pubs">
+  <h2>Publications</h2>
+  <p class="note"><sup>‡</sup>equal contribution · *corresponding author · <strong class="me">underlined</strong>: me</p>
+  <h3>Journal Articles</h3>
+  <ol class="pubs">
+<li id="J.1"><span class="pub-tag">J.1</span><div><div class="pub-title"><a href="https://doi.org/10.1039/D6SC02460B">Defect-Mediated Regulation of Interfacial Hydrophobic Transport via Cavitation Thermodynamics</a></div><div class="pub-authors"><strong class="me">Leshen Zhang</strong>, Guangsheng Liu, Xiao Ma, Abdulrahman Allangawi, Wan-Lu Li*</div><div class="pub-venue"><em>Chem. Sci.</em> <strong>2026</strong>, 17, 15735–15744 · <a href="https://leshenzhang.github.io/papers/J1_Zhang2026_ChemSci.pdf" data-goatcounter-click="pdf:leshenzhang.github.io/papers/J1_Zhang2026_ChemSci.pdf">PDF</a> · <a href="https://doi.org/10.1039/D6SC02460B">DOI</a></div><div class="pub-role">Sole First Author</div></div></li>
+<li id="J.2"><span class="pub-tag">J.2</span><div><div class="pub-title"><a href="https://doi.org/10.1039/D6DD00273K">CatGo: Bridging CLI Coding Agents with Interactive Structure and Workflow Management for Computational Chemistry</a></div><div class="pub-authors">Guangsheng Liu<sup>‡</sup>, Xiao Ma<sup>‡</sup>, <strong class="me">Leshen Zhang</strong><sup>‡</sup>, Jenedith Pascasio, Jonathan Yang, Yuxiang Chen, Wan-Lu Li*</div><div class="pub-venue"><em>Digit. Discov.</em> <strong>2026</strong>, 5, 3825–3849 · <a href="https://leshenzhang.github.io/papers/J2_Liu2026_DigitDiscov.pdf" data-goatcounter-click="pdf:leshenzhang.github.io/papers/J2_Liu2026_DigitDiscov.pdf">PDF</a> · <a href="https://doi.org/10.1039/D6DD00273K">DOI</a></div><div class="pub-role">Co-First Author, Rank Third</div></div></li>
+<li id="J.3"><span class="pub-tag">J.3</span><div><div class="pub-title"><a href="https://doi.org/10.1002/anie.202510241">Switching Photocatalytic Methane Oxidation Toward Ethanol by Tuning Spin States</a></div><div class="pub-authors">Shuya Hao<sup>‡</sup>, Maoyin Wang<sup>‡</sup>, <strong class="me">Leshen Zhang</strong>, Ximeng Lv, Chen Peng, Yuhang Huang, Pei Yuan*, Qing Han*, Gengfeng Zheng*</div><div class="pub-venue"><em>Angew. Chem. Int. Ed.</em> <strong>2025</strong>, 64, e202510241 · <a href="https://leshenzhang.github.io/papers/J3_Hao2025_AngewChem.pdf" data-goatcounter-click="pdf:leshenzhang.github.io/papers/J3_Hao2025_AngewChem.pdf">PDF</a> · <a href="https://doi.org/10.1002/anie.202510241">DOI</a></div><div class="pub-role">Third Author</div></div></li>
+  </ol>
+  <h3>Preprints &amp; Papers Under Review</h3>
+  <ol class="pubs">
+<li id="S.1"><span class="pub-tag">S.1</span><div><div class="pub-title"><a href="https://doi.org/10.26434/chemrxiv.15011517/v1">Incorporating Polarization into ML/MM Endpoint Calculations for Protein–Ligand Affinity Ranking</a></div><div class="pub-authors"><strong class="me">Leshen Zhang</strong><sup>‡</sup>, Xujian Wang<sup>‡</sup>, Taoyu Niu, Xuchao Zhou, Xiao Ma, Guangsheng Liu, Olexandr Isayev*, Junmei Wang*, Wan-Lu Li*</div><div class="pub-venue"><em>JACS Au</em>, under review · <a href="https://chemrxiv.org/doi/pdf/10.26434/chemrxiv.15011517/v1" data-goatcounter-click="pdf:chemrxiv.org/doi/pdf/10.26434/chemrxiv.15011517/v1">PDF</a> · <a href="https://doi.org/10.26434/chemrxiv.15011517/v1">DOI</a></div><div class="pub-role">Co-First Author, Rank First</div></div></li>
+<li id="S.2"><span class="pub-tag">S.2</span><div><div class="pub-title"><a href="https://doi.org/10.26434/chemrxiv.15009834/v1">Local-Environment Populations Govern Size-Dependent OER Activity in Supported Subnanometer IrO<sub>x</sub> Clusters</a></div><div class="pub-authors">Guangsheng Liu<sup>‡</sup>, <strong class="me">Leshen Zhang</strong><sup>‡</sup>, Xiao Ma, Abdulrahman Allangawi, Huabin Zhang*, Wan-Lu Li*</div><div class="pub-venue"><em>Adv. Funct. Mater.</em>, under review · <a href="https://leshenzhang.github.io/papers/S2_Liu2026_ChemRxiv.pdf" data-goatcounter-click="pdf:leshenzhang.github.io/papers/S2_Liu2026_ChemRxiv.pdf">PDF</a> · <a href="https://doi.org/10.26434/chemrxiv.15009834/v1">DOI</a></div><div class="pub-role">Co-First Author, Rank Second</div></div></li>
+<li id="S.3"><span class="pub-tag">S.3</span><div><div class="pub-title"><a href="https://doi.org/10.26434/chemrxiv.15008697/v1">Surface Geometry Governs Cation Effects via Nonlocal Solvent Gating</a></div><div class="pub-authors">Xiao Ma, <strong class="me">Leshen Zhang</strong>, Guangsheng Liu, Abdulrahman Allangawi, Huabin Zhang*, Wan-Lu Li*</div><div class="pub-venue"><em>Angew. Chem. Int. Ed.</em>, under review · <a href="https://chemrxiv.org/doi/pdf/10.26434/chemrxiv.15008697/v1" data-goatcounter-click="pdf:chemrxiv.org/doi/pdf/10.26434/chemrxiv.15008697/v1">PDF</a> · <a href="https://doi.org/10.26434/chemrxiv.15008697/v1">DOI</a></div><div class="pub-role">Second Author</div></div></li>
+<li id="S.4"><span class="pub-tag">S.4</span><div><div class="pub-title"><a href="https://doi.org/10.26434/chemrxiv.15003924/v1">Intercalation-Modulated Electronic Regulation of Nitrogen Reduction on Doped MoS<sub>2</sub></a></div><div class="pub-authors">Guangsheng Liu<sup>‡</sup>, Xiao Ma<sup>‡</sup>, <strong class="me">Leshen Zhang</strong><sup>‡</sup>, Xujian Wang, Abdulrahman Allangawi, Shaowei Li, Wan-Lu Li*</div><div class="pub-venue">To be submitted · <a href="https://leshenzhang.github.io/papers/S4_Liu2026_ChemRxiv.pdf" data-goatcounter-click="pdf:leshenzhang.github.io/papers/S4_Liu2026_ChemRxiv.pdf">PDF</a> · <a href="https://doi.org/10.26434/chemrxiv.15003924/v1">DOI</a></div><div class="pub-role">Co-First Author, Rank Third</div></div></li>
+<li id="S.5"><span class="pub-tag">S.5</span><div><div class="pub-title"><a href="https://doi.org/10.26434/chemrxiv.15006055/v1">ChemMate: An Autonomous Research Mate for the Full Computational Chemistry Research Lifecycle, from Ideation to Manuscript</a></div><div class="pub-authors">Guangsheng Liu<sup>‡</sup>, <strong class="me">Leshen Zhang</strong><sup>‡</sup>, Xiao Ma, I-Shan Tsai, Jinyi Zhang, Wan-Lu Li*</div><div class="pub-venue">To be submitted · <a href="https://leshenzhang.github.io/papers/S5_Liu2026_ChemRxiv.pdf" data-goatcounter-click="pdf:leshenzhang.github.io/papers/S5_Liu2026_ChemRxiv.pdf">PDF</a> · <a href="https://doi.org/10.26434/chemrxiv.15006055/v1">DOI</a></div><div class="pub-role">Co-First Author, Rank Second</div></div></li>
+<li id="S.6"><span class="pub-tag">S.6</span><div><div class="pub-title">Interfacial Proton Relay Enables CO<sub>2</sub>-to-Methanol Electroreduction on Layered Cobalt Phthalocyanine</div><div class="pub-authors">Tingsong Li<sup>‡</sup>, Jifeng Wu<sup>‡</sup>, Abdulrahman Allangawi<sup>‡</sup>, <strong class="me">Leshen Zhang</strong>, Wan-Lu Li*, Xiangyun Xiao, Miao Hu, Mohd Adnan Khan, Rashed Aleisa, Shouwei Zuo, Heng Guo, Kuo-Wei Huang*, Ying Zhou*, Huabin Zhang*, Magnus Rueping*</div><div class="pub-venue"><em>J. Am. Chem. Soc.</em>, under review</div><div class="pub-role">Fourth Author</div></div></li>
+<li id="S.7"><span class="pub-tag">S.7</span><div><div class="pub-title"><a href="https://doi.org/10.26434/chemrxiv.15008812/v1">Leveraging Machine Learning Interatomic Potentials into Fitting Fast and Accurate AMBER-Compatible Precise Force Field</a></div><div class="pub-authors">Xuchao Zhou, Xujian Wang, Jiahao Xie, <strong class="me">Leshen Zhang</strong>, Junmei Wang*</div><div class="pub-venue"><em>JACS Au</em>, under review · <a href="https://chemrxiv.org/doi/pdf/10.26434/chemrxiv.15008812/v1" data-goatcounter-click="pdf:chemrxiv.org/doi/pdf/10.26434/chemrxiv.15008812/v1">PDF</a> · <a href="https://doi.org/10.26434/chemrxiv.15008812/v1">DOI</a></div><div class="pub-role">Fourth Author</div></div></li>
+<li id="S.8"><span class="pub-tag">S.8</span><div><div class="pub-title">Overcoming Excitonic Bottlenecks via Molecular Intercalation into Donor Domains for NIR-Driven Hydrogen Evolution</div><div class="pub-authors">Yunzhi Wang<sup>‡</sup>, Chengyang Feng<sup>‡</sup>, Lijie Wang<sup>‡</sup>, Yang Cheng, <strong class="me">Leshen Zhang</strong>, Yinglu Jia, Lingyun Zhao, Abdulrahman Allangawi, Weiwei Li*, Wan-Lu Li*, Martin Heeney, Magnus Rueping, Omar F. Mohammed*, Huabin Zhang*</div><div class="pub-venue"><em>Nat. Commun.</em>, under review</div><div class="pub-role">Fifth Author</div></div></li>
+  </ol>
+</section>
+</div>
+
+<div class="view" id="view-research">
+<section class="module panel" id="projects">
+  <h2>Research Projects</h2>
+<h3>I. First-Principles Calculations for Materials and Catalysis</h3>
+<h4 id="ra">(a) Surface Reconstruction and Interfacial Structure</h4>
+<div class="proj"><div class="ptitle">Defect-Mediated Regulation of Interfacial Hydrophobic Transport via Cavitation Thermodynamics <a class="ref" href="#J.1">[J.1]</a></div><div class="pi"><em>PI: <strong>Prof. Wan-Lu Li</strong>, UC San Diego, USA</em></div><p>Revealed that surface defects regulate interfacial hydrophobic transport by tuning the local cavitation free energy, establishing cavitation thermodynamics as a descriptor linking interfacial water structure to reactivity</p></div>
+<div class="proj"><div class="ptitle">Local-Environment Populations Govern Size-Dependent OER Activity in Supported Subnanometer IrO<sub>x</sub> Clusters <a class="ref" href="#S.2">[S.2]</a></div><div class="pi"><em>PI: <strong>Prof. Wan-Lu Li</strong>, UC San Diego, USA</em></div><p>Formulated a constant-potential ensemble-sampling methodology that maps site-specific overpotentials and activation barriers across cluster sizes and configurations, bridging local site motifs with microkinetics to identify the ideal size window for Ir clusters</p></div>
+<div class="proj"><div class="ptitle">Surface Geometry Governs Cation Effects via Nonlocal Solvent Gating <a class="ref" href="#S.3">[S.3]</a></div><div class="pi"><em>PI: <strong>Prof. Wan-Lu Li</strong>, UC San Diego, USA</em></div><p>Showed that Au surface geometry governs alkali-cation effects in CO<sub>2</sub> reduction: interfacial water reverses the cation effects and propagates them nonlocally to pristine terraces, explaining the volcano-shaped cation dependence on polycrystalline Au</p></div>
+<div class="proj"><div class="ptitle">Site-Resolved C–C Coupling on Restructured Cu Electrodes (ongoing)</div><div class="pi"><em>PI: <strong>Prof. Anastassia N. Alexandrova</strong>, UC Los Angeles, USA</em></div><p>Investigating how kinetically trapped, adsorbate-roughened Cu electrodes catalyze C–C coupling during CO<sub>2</sub> reduction, and using site-resolved KMC simulation to identify the classes of restructured Cu sites that dominate the coupling rate</p></div>
+<h4 id="rb">(b) Catalytic Mechanisms and Multiscale Modeling</h4>
+<div class="proj"><div class="ptitle">Switching Photocatalytic Methane Oxidation Toward Ethanol by Tuning Spin States <a class="ref" href="#J.3">[J.3]</a></div><div class="pi"><em>PI: <strong>Prof. Gengfeng Zheng</strong>, Fudan University, China</em></div><p><em>Experiment:</em> developed a Zn–O–Fe catalyst that selectively photo-oxidizes CH<sub>4</sub> to ethanol<br><em>Computation:</em> revealed that the medium Fe spin state preferentially stabilizes •CH<sub>2</sub>OH over •OCH<sub>3</sub>, explaining why the catalyst with medium-spin polarization favors ethanol</p></div>
+<div class="proj"><div class="ptitle">Intercalation-Modulated Electronic Regulation of Nitrogen Reduction on Doped MoS<sub>2</sub> <a class="ref" href="#S.4">[S.4]</a></div><div class="pi"><em>PI: <strong>Prof. Wan-Lu Li</strong>, UC San Diego, USA</em></div><p>Developed a screening strategy that excludes unstable catalysts before DFT and distilled an interpretable SISSO descriptor governing NRR activity and selectivity against HER</p></div>
+<div class="proj"><div class="ptitle">Multiscale Modeling of PEM Water-Electrolysis OER: From DFT to Device</div><div class="pi"><em>PI: <strong>Prof. Wan-Lu Li</strong>, UC San Diego, USA</em></div><p>Bridged DFT, microkinetic modeling, and mass-transfer simulation in a multiscale model, showing that catalyst morphology governs local mass transport and thereby the apparent activity</p></div>
+<h3 id="rc">II. AI-Assisted Scientific Software</h3>
+<div class="proj"><div class="ptitle">CatGo: Bridging CLI Coding Agents with Interactive Structure and Workflow Management for Computational Chemistry <a class="ref" href="#J.2">[J.2]</a></div><div class="pi"><em>PI: <strong>Prof. Wan-Lu Li</strong>, UC San Diego, USA</em></div><p>Established an open-source platform unifying the structure → DFT → HPC → analysis chain, and bridged AI coding agents to its workbench, enabling high-throughput calculations</p></div>
+<div class="proj"><div class="ptitle">ChemMate: A Conversational Research Collaborator for Computational Chemistry <a class="ref" href="#S.5">[S.5]</a></div><div class="pi"><em>PI: <strong>Prof. Wan-Lu Li</strong>, UC San Diego, USA</em></div><p>Established an autonomous research collaborator that runs entire projects from ideation to manuscript under human gates, demonstrated in five campaigns with reproducible results</p></div>
+<h3 id="rd">III. Molecular Modeling: Electrostatics in Enzyme Design</h3>
+<div class="proj"><div class="ptitle">Incorporating Polarization into ML/MM Endpoint Calculations for Protein–Ligand Affinity Ranking <a class="ref" href="#S.1">[S.1]</a></div><div class="pi"><em>PI: <strong>Prof. Wan-Lu Li</strong>, UC San Diego, and <strong>Prof. Junmei Wang</strong>, University of Pittsburgh, USA</em></div><p>Developed the PCME method for ML/MM embedding, which feeds conformation-resolved ML charges of the ligand and binding site into the Poisson–Boltzmann solver, accurately predicting binding affinities with high computational efficiency</p></div>
+</section>
+
+<section class="module panel" id="software">
+  <h2>Software</h2>
+  <div class="sw">
+    <div><b>CatGo</b><div><p>Open-source structure → DFT → HPC → analysis workbench that AI coding agents can drive, with every action reviewable. <em>Digit. Discov.</em> 2026.</p>
+      <p class="swlinks"><a href="https://doi.org/10.1039/D6DD00273K">Paper</a> · <a href="https://leshenzhang.github.io/papers/J2_Liu2026_DigitDiscov.pdf" data-goatcounter-click="pdf:leshenzhang.github.io/papers/J2_Liu2026_DigitDiscov.pdf">PDF</a> · <a href="https://github.com/Hello-QM/catgo-LRG">GitHub</a> · <a href="https://doi.org/10.5281/zenodo.19709425">Zenodo</a></p></div></div>
+    <div><b>ChemMate</b><div><p>Autonomous research collaborator that carries computational-chemistry projects from ideation to manuscript under human gates. ChemRxiv 2026.</p>
+      <p class="swlinks"><a href="https://doi.org/10.26434/chemrxiv.15006055/v1">Preprint</a> · <a href="https://leshenzhang.github.io/papers/S5_Liu2026_ChemRxiv.pdf" data-goatcounter-click="pdf:leshenzhang.github.io/papers/S5_Liu2026_ChemRxiv.pdf">PDF</a></p></div></div>
+    <div><b>SPARK</b><div><p>On-the-fly kinetic Monte Carlo for surface reactions.</p>
+      <p class="swlinks"><a href="https://github.com/WanluLigroupUCSD/SPARK">GitHub</a></p></div></div>
+  </div>
+</section>
+</div>
+
+<footer>© Leshen Zhang · Last updated November 2026</footer>
+</main>
+</div>
 <script>
   (function () {
     var root = document.documentElement, btns = document.querySelectorAll("[data-theme-value]");
@@ -307,6 +323,26 @@
       });
     });
     show();
+  })();
+  // one page per tab; the URL hash picks the tab (#publications), and any in-page anchor (#J.1, #rc) opens the tab that holds it
+  (function () {
+    var tabs = document.querySelectorAll(".tab"), views = document.querySelectorAll(".view"), first = true;
+    function route() {
+      var id = decodeURIComponent(location.hash.slice(1)), view = document.getElementById("view-" + id), target = null;
+      if (!view && id) { target = document.getElementById(id); view = target && target.closest(".view"); }
+      if (!view) view = document.getElementById("view-home");
+      var name = view.id.slice(5);
+      views.forEach(function (v) { v.classList.toggle("active", v === view); });
+      tabs.forEach(function (t) { t.setAttribute("aria-selected", String(t.dataset.view === name)); });
+      if (target) {
+        target.scrollIntoView({ block: "start" });
+        target.classList.add("flash"); setTimeout(function () { target.classList.remove("flash"); }, 1600);
+      } else if (!first) window.scrollTo(0, Math.max(0, document.querySelector("main").getBoundingClientRect().top + window.scrollY - 8));
+      if (!first && window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: "/" + name });
+      first = false;
+    }
+    window.addEventListener("hashchange", route);
+    route();
   })();
 </script>
 <!-- Visit tracker (GoatCounter). Per-recipient links: https://leshenzhang.github.io/?ref=<name> -->

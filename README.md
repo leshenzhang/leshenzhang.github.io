@@ -38,3 +38,4 @@ Academic homepage of Leshen Zhang — https://leshenzhang.github.io/
 - `.github/workflows/rebuild.yml` — rebuilds and republishes when `template.html`, `assets/` or `cv/` change on GitHub
 - Visit statistics: GoatCounter (`leshenzhang.goatcounter.com`); per-recipient links `?ref=<name>`
 - Layout (2026-10-26) adapted from [Homepage_as_CV](https://github.com/NTDXYG/Homepage_as_CV) by NTDXYG (MIT): sticky profile column, light/dark switch
+- Tabs (2026-11-05): Home / Publications / Research / Experience as separate views in card panels, design after https://jinghanyang.com/ (own code, no files copied); the URL hash picks the tab (`#publications`), and any anchor such as `#J.1` opens the tab that holds it
