@@ -12,6 +12,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 CV_DIR = HERE.parent / "cv" / "CV-PhD"          # local machine: the Overleaf-synced CV
 SNAPSHOT = HERE / "cv" / "main.tex"               # copy kept in this repo so GitHub Actions can rebuild too
 TEX = (CV_DIR / "main.tex" if (CV_DIR / "main.tex").exists() else SNAPSHOT).read_text(encoding="utf-8")
+TEX = re.sub(r"(?m)^%web ", "", TEX)                # lines kept out of the 2-page CV PDF but shown on the site
 
 
 def brace(s, i):
@@ -59,7 +60,7 @@ def latex_to_html(s):
 
 
 def section(name):
-    m = re.search(r"\\begin\{rSection\}\{" + re.escape(name) + r"[^\n]*\n(.*?)\\end\{rSection\}", TEX, re.S)
+    m = re.search(r"\\begin\{rSection\}\{(?:Selected )?" + re.escape(name) + r"[^\n]*\n(.*?)\\end\{rSection\}", TEX, re.S)
     return m.group(1) if m else ""
 
 
