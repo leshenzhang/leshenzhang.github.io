@@ -107,10 +107,13 @@ def research():
         elif item:
             title = latex_to_html(item.group(1))
             rest = latex_to_html(item.group(2)).split("\n")
+            gh = re.match(r'GitHub:\s*<a href="([^"]+)">[^<]*</a>\s*', rest[0].strip())   # repo link in place of a [J.x] tag
+            if gh:
+                rest[0] = rest[0].strip()[gh.end():]
             head = re.match(r"(?:(?:<strong>)?\[([JS]\.\d)\](?:</strong>)?)?\s*((?:<em>)?PI:.*)", rest[0].strip())
             tag, pi = (head.group(1), head.group(2)) if head else (None, "")
             text = "<br>".join(x.strip() for x in (rest[1:] if head else rest) if x.strip())
-            ref = f' <a class="ref" href="#{tag}">[{tag}]</a>' if tag else ""
+            ref = (f' <a class="ref" href="#{tag}">[{tag}]</a>' if tag else "") + (f' <a class="ref" href="{gh.group(1)}">[GitHub]</a>' if gh else "")
             parts.append(f'<div class="proj"><div class="ptitle">{title}{ref}</div>'
                          + (f'<div class="pi">{pi}</div>' if pi else "") + f"<p>{text}</p></div>")
     return "\n".join(parts)
