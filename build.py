@@ -71,7 +71,7 @@ def publications(name):
     for m in re.finditer(r"\\item\[\\textbf\{\[([JS]\.\d+)\]\}\] (.*)", section(name)):
         tag, body = m.group(1), re.sub(r"\\hypertarget\{[^}]*\}\{\}", "", m.group(2))
         top, _, bottom = body.partition("\\\\")
-        t = re.search(r"(?:\\href\{([^}]*)\}\{)?\\textbf\{((?:[^{}]|\{[^{}]*\})*)\}\}?\.\s*$", top.strip())
+        t = re.search(r"(?:\\href\{([^}]*)\}\{)?\\(?:textbf|ptitle)\{((?:[^{}]|\{[^{}]*\})*)\}\}?\.\s*$", top.strip())
         doi_url, title = t.group(1), latex_to_html(t.group(2))
         authors = latex_to_html(top.strip()[:t.start()].strip().rstrip("."))
         links = re.findall(r"\\href\{([^}]*)\}\{\[(PDF|DOI)\]\}", bottom)
