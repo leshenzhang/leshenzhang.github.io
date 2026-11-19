@@ -13,6 +13,7 @@ CV_DIR = HERE.parent / "cv" / "CV-PhD"          # local machine: the Overleaf-sy
 SNAPSHOT = HERE / "cv" / "main.tex"               # copy kept in this repo so GitHub Actions can rebuild too
 TEX = (CV_DIR / "main.tex" if (CV_DIR / "main.tex").exists() else SNAPSHOT).read_text(encoding="utf-8")
 TEX = re.sub(r"(?m)^%web ", "", TEX)                # lines kept out of the 2-page CV PDF but shown on the site
+TEX = TEX.replace("\\bluehref", "\\href")              # blue-link macro of the CV
 
 
 def brace(s, i):
