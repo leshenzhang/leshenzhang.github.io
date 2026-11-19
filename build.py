@@ -35,7 +35,7 @@ def latex_to_html(s):
     s = s.replace("~", " ").replace("---", "—").replace("--", "–").replace("\\&", "&")
     s = s.replace("\\textbullet{}", "•").replace("\\textrightarrow{}", "→").replace("\\textbar{}", "|")
     s = s.replace("``", "“").replace("''", "”").replace("`", "‘").replace("'", "’")
-    s = s.replace("$\\times$", "×").replace("$\\rho$", "ρ")
+    s = s.replace("$\\times$", "×").replace("$\\rho$", "ρ").replace("\\textmu", "μ")
     s = html.escape(s, quote=False)
     # \href{url}{text}
     while "\\href{" in s:
@@ -67,7 +67,7 @@ def section(name):
 def publications(name):
     """Numbered list as on Homepage_as_CV: [tag] | title / authors / venue + links / author role."""
     out = []
-    for m in re.finditer(r"\\item\[\\textbf\{\[([JS]\.\d)\]\}\] (.*)", section(name)):
+    for m in re.finditer(r"\\item\[\\textbf\{\[([JS]\.\d+)\]\}\] (.*)", section(name)):
         tag, body = m.group(1), re.sub(r"\\hypertarget\{[^}]*\}\{\}", "", m.group(2))
         top, _, bottom = body.partition("\\\\")
         t = re.search(r"(?:\\href\{([^}]*)\}\{)?\\textbf\{((?:[^{}]|\{[^{}]*\})*)\}\}?\.\s*$", top.strip())
@@ -110,7 +110,7 @@ def research():
             gh = re.match(r'GitHub:\s*<a href="([^"]+)">[^<]*</a>\s*', rest[0].strip())   # repo link in place of a [J.x] tag
             if gh:
                 rest[0] = rest[0].strip()[gh.end():]
-            head = re.match(r"(?:(?:<strong>)?\[([JS]\.\d)\](?:</strong>)?)?\s*((?:<em>)?PI:.*)", rest[0].strip())
+            head = re.match(r"(?:(?:<strong>)?\[([JS]\.\d+)\](?:</strong>)?)?\s*((?:<em>)?PI:.*)", rest[0].strip())
             tag, pi = (head.group(1), head.group(2)) if head else (None, "")
             text = "<br>".join(x.strip() for x in (rest[1:] if head else rest) if x.strip())
             ref = (f' <a class="ref" href="#{tag}">[{tag}]</a>' if tag else "") + (f' <a class="ref" href="{gh.group(1)}">[GitHub]</a>' if gh else "")
