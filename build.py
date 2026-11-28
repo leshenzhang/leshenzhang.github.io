@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build index.html from the CV source (../cv/CV-PhD/main.tex) so the site never drifts from the CV.
+"""Build index.html from the CV source (../cv/CV-PhD/CV-short.tex) so the site never drifts from the CV.
 
 Usage:  python3 build.py            # regenerate index.html + copy the compiled CV PDF
         ./update.sh                 # rebuild, commit, push (site goes live in ~1 min)
@@ -10,8 +10,8 @@ import datetime, hashlib, html, pathlib, re, shutil
 
 HERE = pathlib.Path(__file__).resolve().parent
 CV_DIR = HERE.parent / "cv" / "CV-PhD"          # local machine: the Overleaf-synced CV
-SNAPSHOT = HERE / "cv" / "main.tex"               # copy kept in this repo so GitHub Actions can rebuild too
-TEX = (CV_DIR / "main.tex" if (CV_DIR / "main.tex").exists() else SNAPSHOT).read_text(encoding="utf-8")
+SNAPSHOT = HERE / "cv" / "CV-short.tex"               # copy kept in this repo so GitHub Actions can rebuild too
+TEX = (CV_DIR / "CV-short.tex" if (CV_DIR / "CV-short.tex").exists() else SNAPSHOT).read_text(encoding="utf-8")
 TEX = re.sub(r"(?m)^%web ", "", TEX)                # lines kept out of the 2-page CV PDF but shown on the site
 TEX = TEX.replace("\\bluehref", "\\href")              # blue-link macro of the CV
 
@@ -137,10 +137,10 @@ def service():
 
 def main():
     tpl = (HERE / "template.html").read_text(encoding="utf-8")
-    pdf = CV_DIR / "main.pdf"
+    pdf = CV_DIR / "CV-short.pdf"
     if pdf.exists():
         shutil.copy(pdf, HERE / "cv" / "Leshen_Zhang_CV.pdf")
-        shutil.copy(CV_DIR / "main.tex", SNAPSHOT)
+        shutil.copy(CV_DIR / "CV-short.tex", SNAPSHOT)
     if (CV_DIR / "research_summary.pdf").exists():
         shutil.copy(CV_DIR / "research_summary.pdf", HERE / "cv" / "Leshen_Zhang_Research_Summary.pdf")
     page = (tpl.replace("{{PUBLICATIONS}}", publications("Publications"))
